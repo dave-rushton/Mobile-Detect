@@ -1,0 +1,795 @@
+var structureForm, structureModalForm;
+
+$(function(){
+
+    $("#structureModal").on('shown.bs.modal', function () {
+        $('[name="strnam"]', structureModalForm).focus();
+    });
+
+    structureForm = $('#structureForm');
+    structureModalForm = $('#structureModalForm');
+
+    structureForm.submit(function(e){
+
+        e.preventDefault();
+
+        var fields = $(".customfield", structureForm).serializeArray();
+        var elementVariables = JSON.stringify(fields);
+        var postData = encodeURIComponent(elementVariables);
+
+        $.ajax({
+            url: 'products/structure_script.php',
+            data: 'action=update&' + structureForm.serialize() + '&strobj=' + postData,
+            type: 'POST',
+            async: false,
+            success: function (data) {
+
+                var result = JSON.parse(data);
+
+                buildStructure();
+
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+    });
+
+    $('#buildStructure').on('click', '.selectStructureBtn', function(e){
+        e.preventDefault();
+
+        var strID = $(this).data('str_id');
+
+        $('[name="str_id"]', structureModalForm).val(strID);
+
+        plupLoad( $('#plupload') );
+
+        getStructureGallery($('[name="str_id"]', structureModalForm).val());
+
+        $.ajax({
+            url: 'products/structure_script.php',
+            data: 'action=relatedproducts&str_id='+strID+'&eleadm=true',
+            type: 'POST',
+            async: false,
+            success: function (data) {
+
+                var result = JSON.parse(data);
+
+                //var resultHTML = '<ul>';
+                var resultHTML = '';
+
+                for (i=0;i<result.length;i++) {
+
+                    resultHTML += '<li class="relatedSort" data-rel_id="'+ result[i].rel_id +'">' + result[i].prtnam + '</li>';
+
+                }
+
+                //resultHTML += '</ul>';
+
+                $('#uploadImagesDiv').css('display','block')
+                $('#productimagepicker').css('display','block')
+                $('#subStructure').html(resultHTML);
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+
+    });
+
+    $('#createStructureBtn').click(function(e){
+        e.preventDefault();
+        //structureForm.submit();
+
+        e.preventDefault();
+        $('[name="par_id"]', structureModalForm).val( $(this).data('str_id') );
+        $('[name="str_id"]', structureModalForm).val(0);
+        $('[name="strnam"]', structureModalForm).val('');
+        $('[name="strdsc"]', structureModalForm).val('');
+        $('[name="seourl"]', structureModalForm).val('');
+        $('[name="srtord"]', structureModalForm).val(99);
+        $('[name="tbl_id"]', structureModalForm).val(0);
+
+        $('[name="keywrd"]', structureModalForm).val('');
+        $('[name="keydsc"]', structureModalForm).val('');
+
+        $('#structureModal').modal('show');
+
+    });
+
+    $('#buildStructure').on('click', '.addStructureBtn', function(e){
+
+        e.preventDefault();
+        $('[name="par_id"]', structureModalForm).val( $(this).data('str_id') );
+        $('[name="str_id"]', structureModalForm).val(0);
+        $('[name="strnam"]', structureModalForm).val('');
+        $('[name="strdsc"]', structureModalForm).val('');
+        $('[name="seourl"]', structureModalForm).val('');
+        $('[name="srtord"]', structureModalForm).val(99);
+        $('[name="tbl_id"]', structureModalForm).val(0);
+
+        $('[name="keywrd"]', structureModalForm).val('');
+        $('[name="keydsc"]', structureModalForm).val('');
+
+        $('#structureModal').modal('show');
+
+        // Blank Language
+
+
+    });
+    $('#buildStructure').on('click', '.editStructureBtn', function(e){
+
+        e.preventDefault();
+
+        $.ajax({
+            url: 'products/structure_script.php',
+            data: 'action=select&str_id=' + $(this).data('str_id'),
+            type: 'POST',
+            async: false,
+            success: function (data) {
+
+                console.log(data);
+
+                var result = JSON.parse(data);
+
+                $('[name="par_id"]', structureModalForm).val(result[0].par_id);
+                $('[name="str_id"]', structureModalForm).val(result[0].str_id);
+                $('[name="strnam"]', structureModalForm).val(result[0].strnam);
+                $('[name="seourl"]', structureModalForm).val(result[0].seourl);
+                $('[name="srtord"]', structureModalForm).val(result[0].srtord);
+                $('[name="sta_id"]', structureModalForm).val(result[0].sta_id);
+
+                $('[name="dsptyp"]', structureModalForm).val( getJSONvariable('dsptyp', result[0].strobj) );
+                $('[name="toptext"]', structureModalForm).val( getJSONvariable('toptext', result[0].strobj) );
+                $('[name="h1"]', structureModalForm).val( getJSONvariable('h1', result[0].strobj) );
+                $('[name="seotitle"]', structureModalForm).val( getJSONvariable('seotitle', result[0].strobj) );
+
+                $('[name="strdsc"]', structureModalForm).val( getJSONvariable('strdsc', result[0].strobj) );
+
+                $('[name="quickl"]', structureModalForm).prop( 'checked', (getJSONvariable('quickl', result[0].strobj) == 1) ? true : false );
+
+                $('[name="fr_strnam"]', structureModalForm).val( getJSONvariable('fr_strnam', result[0].strobj) );
+                $('[name="ge_strnam"]', structureModalForm).val( getJSONvariable('ge_strnam', result[0].strobj) );
+                $('[name="sp_strnam"]', structureModalForm).val( getJSONvariable('sp_strnam', result[0].strobj) );
+
+                $('[name="tbl_id"]', structureModalForm).val( result[0].tbl_id );
+
+                $('[name="keywrd"]', structureModalForm).val(result[0].keywrd);
+                $('[name="keydsc"]', structureModalForm).val(result[0].keydsc);
+
+                $('#structureModal').modal('show');
+                $('[name="strnam"]', structureModalForm).focus();
+
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+    });
+    $('#buildStructure').on('click', '.deleteStructureBtn', function(e){
+
+        var strID = $(this).data('str_id');
+
+        $.msgAlert ({
+            type: 'warning'
+            , title: 'Delete This Image'
+            , text: 'Are you sure you wish to permanently remove this item and sub items from the database?'
+            , callback: function () {
+
+                $.ajax({
+                    url: 'products/structure_script.php',
+                    data: 'action=deletestructure&str_id=' + strID,
+                    type: 'POST',
+                    async: false,
+                    success: function (data) {
+
+                        buildStructure();
+
+                    },
+                    error: function (x, e) {
+                        throwAjaxError(x, e);
+                    }
+                });
+
+            }
+        });
+
+        e.preventDefault();
+
+    });
+    
+    $('#buildStructure').on('click', '.makeCategoryBtn', function(e){
+
+        var strID = $(this).data('str_id');
+
+        $.msgAlert ({
+            type: 'warning'
+            , title: 'Convert Structure To Category?'
+            , text: 'Are you sure you wish to permanently remove this item and create it as a category?'
+            , callback: function () {
+
+                $.ajax({
+                    url: 'products/structure_script.php',
+                    data: 'action=createcategory&str_id=' + strID,
+                    type: 'POST',
+                    async: false,
+                    success: function (data) {
+
+                        //alert(data);
+
+                        buildStructure();
+
+                    },
+                    error: function (x, e) {
+                        throwAjaxError(x, e);
+                    }
+                });
+
+            }
+        });
+
+        e.preventDefault();
+
+    });
+
+    $('#updateStructureBtn').click(function(e){
+
+        e.preventDefault();
+
+        var fields = $(".customfield", structureModalForm).serializeArray();
+        var elementVariables = JSON.stringify(fields);
+        var postData = encodeURIComponent(elementVariables);
+
+        //alert(postData);
+
+        $.ajax({
+            url: 'products/structure_script.php',
+            data: 'action=update&' + structureModalForm.serialize() + '&strobj=' + postData,
+            type: 'POST',
+            async: false,
+            success: function (data) {
+
+                var result = JSON.parse(data);
+
+                buildStructure();
+
+                $('#structureModal').modal('hide');
+
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+    })
+
+    $('[name="strnam"]', structureModalForm).on("keyup paste", function() {
+
+        $('[name="seourl"]', structureModalForm).val( seoURL( $('[name="strnam"]', structureModalForm).val() ) );
+
+    });
+
+    $('#subStructure').sortable({
+        //handle: ".relatedSort",
+        stop: function( event, ui ) {
+
+            $('#subBlockOut').block({ message: 'Retrieving' });
+
+            var relLst = '';
+
+            $('.relatedSort', $('#subStructure')).each(function(){
+                relLst += (relLst == '') ? $(this).data('rel_id') : ',' + $(this).data('rel_id');
+            });
+
+            $.ajax({
+                url: 'system/related_script.php',
+                data: 'action=resort&ajax=true&rel_id=' + relLst,
+                type: 'POST',
+                async: true,
+                success: function( data ) {
+
+                    var result = JSON.parse(data);
+
+                    $.msgGrowl ({
+                        type: result.type
+                        , title: result.title
+                        , text: result.description
+                    });
+
+                    $('#subBlockOut').unblock();
+
+                },
+                error: function (x, e) {
+                    throwAjaxError(x, e);
+                }
+            });
+
+        }
+    });
+
+    buildStructure();
+
+    $('.gallery-dynamic').on('click', '.editUpload', function (e) {
+        e.preventDefault();
+
+        var uplId = $(this).data('upl_id');
+
+        $.ajax({
+            url: 'gallery/uploads_script.php',
+            data: 'action=select&upl_id=' + uplId,
+            type: 'GET',
+            async: false,
+            success: function( data ) {
+
+
+                var imgArray = JSON.parse(data);
+
+                $('[name="upl_id"]', $('#imageForm')).val( imgArray[0].upl_id );
+                $('[name="uplttl"]', $('#imageForm')).val( imgArray[0].uplttl );
+                $('[name="upldsc"]', $('#imageForm')).val( imgArray[0].upldsc );
+                $('[name="urllnk"]', $('#imageForm')).val( imgArray[0].urllnk );
+                $('[name="overlay"]', $('#imageForm')).val( getJSONvariable('overlay', imgArray[0].uplobj) );
+
+                
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+        $('#imageModal').modal('show');
+    });
+
+    $('.gallery-dynamic').on('click', '.deleteUpload', function (e) {
+        e.preventDefault();
+
+        var upl_id = $(this).data('upl_id');
+
+        $.msgAlert ({
+            type: 'warning'
+            , title: 'Delete This Image'
+            , text: 'Are you sure you wish to permanently remove this image from the database?'
+            , callback: function () {
+
+                $.ajax({
+                    url: 'gallery/uploads_script.php',
+                    data: 'action=delete&ajax=true&upl_id=' + upl_id,
+                    type: 'POST',
+                    async: false,
+                    success: function( data ) {
+
+                        var result = JSON.parse(data);
+
+                        $.msgGrowl ({
+                            type: result.type
+                            , title: result.title
+                            , text: result.description
+                        });
+
+                        getStructureGallery($('[name="str_id"]', structureModalForm).val());
+
+                    },
+                    error: function (x, e) {
+                        throwAjaxError(x, e);
+                    }
+                });
+
+            }
+        });
+        return false;
+    });
+
+    $('#galleryImages').sortable({
+        handle: ".moveUpload",
+        stop: function(){
+
+            var images = $('#galleryImages').find('.moveUpload');
+
+            var SrtOrd = '';
+
+            images.each(function(){
+                SrtOrd += (SrtOrd == '') ? $(this).data('upl_id') : ','+$(this).data('upl_id');
+            });
+
+            //alert('uploader/gallery.resort.php?srtord=' + SrtOrd);
+
+            $.ajax({
+                url: 'gallery/uploads_script.php',
+                data: 'action=resort&srtord=' + SrtOrd,
+                type: 'GET',
+                async: false,
+                success: function( data ) {
+
+//					alert(data);
+
+                    $.msgGrowl ({
+                        type: 'success'
+                        , title: 'Gallery Re-Ordered'
+                        , text: 'Gallery Re-Ordered'
+                    });
+
+                },
+                error: function (x, e) {
+                    throwAjaxError(x, e);
+                }
+            });
+
+        }
+    });
+
+    $('#imageForm').submit(function(e){
+        e.preventDefault();
+
+        var fields = $(".customfield", $('#imageForm')).serializeArray();
+        var elementVariables = JSON.stringify(fields);
+        var postData = encodeURIComponent(elementVariables);
+
+        $.ajax({
+            url: 'gallery/uploads_script.php',
+            data: 'action=update&' + $('#imageForm').serialize() + '&uplobj=' + postData,
+            type: 'GET',
+            async: false,
+            success: function( data ) {
+
+
+                console.log(data);
+
+                var result = JSON.parse(data);
+
+                $.msgGrowl ({
+                    type: result.type
+                    , title: result.title
+                    , text: result.description
+                });
+
+                if ( result.type != 'Error' ) {
+                    $('#imageModal').modal('hide');
+                }
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+    });
+
+});
+
+function buildStructure() {
+
+    $('#buildStructure').block({ message: 'Retrieving' });
+
+    $.ajax({
+        url: 'products/structure_script.php',
+        data: 'action=structure&str_id=0&eleadm=true',
+        type: 'POST',
+        async: false,
+        success: function (data) {
+
+            $('#buildStructure').html(data);
+
+            $('#buildStructure').find('a').each(function(){
+
+                var btnHTML = '';
+                btnHTML += '<a href="#" class="btn btn-mini btn-danger deleteStructureBtn" data-str_id="'+$(this).data('str_id')+'"><i class="icon icon-trash"></i></a>';
+                btnHTML += '<a href="#" class="btn btn-mini btn-secondary editStructureBtn" data-str_id="'+$(this).data('str_id')+'"><i class="icon icon-pencil"></i></a>';
+                btnHTML += '<a href="#" class="btn btn-mini btn-primary addStructureBtn" data-str_id="'+$(this).data('str_id')+'"><i class="icon icon-plus-sign"></i></a>';
+                btnHTML += '<a href="#" class="btn btn-mini btn-warning makeCategoryBtn" data-str_id="'+$(this).data('str_id')+'"><i class="icon icon-refresh"></i></a>';
+
+                $(this).parent().prepend(btnHTML);
+
+            });
+
+            modalStructure();
+
+            $('#buildStructure').unblock();
+
+        },
+        error: function (x, e) {
+            throwAjaxError(x, e);
+        }
+    });
+
+}
+
+
+function modalStructure() {
+
+    $.ajax({
+        url: 'products/structure_script.php',
+        data: 'action=structure&str_id=0&ele_id=mparentID&elecls=hide&eleadm=true',
+        type: 'POST',
+        async: true,
+        success: function (data) {
+
+            $('#modalStructure').html(data);
+
+            selectnav('mparentID', {
+                name: 'par_id',
+                label: 'Select Parent',
+                nested: true,
+                indent: '-'
+            });
+
+            $('#mparentID').change();
+
+        },
+        error: function (x, e) {
+            throwAjaxError(x, e);
+        }
+    });
+
+}
+
+
+function getStructureGallery(iStrId) {
+
+    $.ajax({
+        url: 'products/producttypes.gallery.php',
+        data: 'tblnam=STRUCTURE&tbl_id='+iStrId,
+        type: 'GET',
+        async: false,
+        success: function( data ) {
+
+            $('#galleryImages').html(data);
+
+            $.msgGrowl ({
+                type: 'success'
+                , title: 'Gallery Retrieved'
+                , text: 'Gallery Retrieved'
+            });
+
+        },
+        error: function (x, e) {
+            throwAjaxError(x, e);
+        }
+    });
+
+    $(".colorbox-image").colorbox({
+        maxWidth: "90%",
+        maxHeight: "90%",
+        rel: $(this).attr("rel")
+    });
+
+}
+
+
+function plupLoad(iElement) {
+
+    var $el = iElement;
+    $el.pluploadQueue({
+        runtimes : 'html5,gears,flash,silverlight,browserplus',
+        url : 'upload.php?resize=169-130,1200-400&tblnam=STRUCTURE&tbl_id=' + $('[name="str_id"]', structureModalForm).val(),
+        max_file_size : '10mb',
+        chunk_size : '5mb',
+        unique_names : true,
+        multiple_queues : true,
+        //resize : {width : 320, height : 240, quality : 90},
+        filters : [
+            {title : "Image files", extensions : "jpg,gif,png"},
+            {title : "Zip files", extensions : "zip"}
+        ],
+        flash_swf_url : 'js/plupload/plupload.flash.swf',
+        silverlight_xap_url : 'js/plupload/plupload.silverlight.xap'
+    });
+    $(".plupload_header").remove();
+    var upload = $el.pluploadQueue();
+    if($el.hasClass("pl-sidebar")){
+        $(".plupload_filelist_header,.plupload_progress_bar,.plupload_start").remove();
+        $(".plupload_droptext").html("<span>Drop files to upload</span>");
+        $(".plupload_progress").remove();
+        $(".plupload_add").text("Or click here...");
+        upload.bind('FilesAdded', function(up, files) {
+            setTimeout(function () {
+                up.start();
+            }, 500);
+        });
+        upload.bind("QueueChanged", function(up){
+            $(".plupload_droptext").html("<span>Drop files to upload</span>");
+        });
+        upload.bind("StateChanged", function(up){
+            $(".plupload_upload_status").remove();
+            $(".plupload_buttons").show();
+        });
+
+    } else {
+        $(".plupload_progress_container").addClass("progress").addClass('progress-striped');
+        $(".plupload_progress_bar").addClass("bar");
+        $(".plupload_button").each(function(){
+            if($(this).hasClass("plupload_add")){
+                $(this).attr("class", 'btn pl_add btn-primary').html("<i class='icon-plus-sign'></i> "+$(this).html());
+            } else {
+                $(this).attr("class", 'btn pl_start btn-success').html("<i class='icon-cloud-upload'></i> "+$(this).html());
+            }
+        });
+    }
+
+    upload.bind("UploadComplete", function(up) {
+        if (up.files.length == (up.total.uploaded + up.total.failed)) {
+            getStructureGallery($('[name="str_id"]', structureModalForm).val());
+        }
+    });
+
+
+    gallerySearchForm = $('#gallerySearchForm');
+    gallerySearchForm.submit(function(e){
+        e.preventDefault();
+        var val = $('#action').val();
+        var Tbl_ID = $('[name="gal_id1"]', $("#"+val+'-select')).val();
+
+        var KeyWrd = $('#keywrd1').val();
+
+        var Tblnam;
+
+        if (val == 'gallery') {
+            Tblnam = (Tbl_ID == 0) ? 'GLOBAL' : 'WEBGALLERY';
+        } else {
+            Tblnam = val.toUpperCase();
+        }
+
+        $('#imagelisting').on('click','.selectUpload',function(e){
+            e.preventDefault();
+            $(this).parent().parent().toggleClass('active').prev('.imageselect').toggleClass('active');
+        });
+
+
+        // alert('tblnam='+Tblnam+'&tbl_id='+Tbl_ID+'&keywrd=' + $('[name="keywrd"]', gallerySearchForm).val())
+        $.ajax({
+            url: 'gallery/uploads.gallery.global.php',
+            data: 'tblnam='+Tblnam+'&tbl_id='+Tbl_ID+'&keywrd='+ $('#keywrd1').val(),
+            type: 'GET',
+            async: false,
+            success: function( data ) {
+                $('#imagelisting').html(data);
+                $.msgGrowl ({
+                    type: 'success'
+                    , title: 'Gallery Retrieved'
+                    , text: 'Gallery Retrieved'
+                });
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+    })
+
+    function getGallery() {
+
+        $.ajax({
+            url: 'gallery/uploads.gallery.global.php',
+            data: 'tblnam=GLOBAL&tbl_id=0',
+            type: 'GET',
+            async: false,
+            success: function( data ) {
+
+                $('#imagelisting').html(data);
+
+                $.msgGrowl ({
+                    type: 'success'
+                    , title: 'Gallery Retrieved'
+                    , text: 'Gallery Retrieved'
+                });
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+        $.ajax({
+            url: 'gallery/uploads.gallery.php',
+            data: 'tblnam=STRUCTURE&tbl_id='+$('[name="prd_id"]', structureForm).val(),
+            type: 'GET',
+            async: false,
+            success: function( data ) {
+
+                $('#galleryImages').html(data);
+
+                $.msgGrowl ({
+                    type: 'success'
+                    , title: 'Gallery Retrieved'
+                    , text: 'Gallery Retrieved'
+                });
+
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+
+        $(".colorbox-image").colorbox({
+            maxWidth: "90%",
+            maxHeight: "90%",
+            rel: $(this).attr("rel")
+        });
+
+    }
+    $('#updateGalleryImagesBtn').click(function(e){
+        e.preventDefault();
+        //
+        // UPDATE GALLERY
+        //
+        var imageFiles = '';
+
+        $('.imageselect.active').each(function(){
+            imageFiles += (imageFiles == '') ? $(this).data('upl_id') : ',' + $(this).data('upl_id');
+        });
+
+        $.ajax({
+            url: 'gallery/galleryimagecontrol.php',
+            //data: 'action=update&ajax=true&' + galleryForm.serialize(),
+            data: 'tblnam=STRUCTURE' + '&tbl_id='+$('[name="str_id"]', structureModalForm).val() + '&filnam=' + imageFiles,
+            // data: 'tblnam=' + $('[name="tblnam"]').val() + '&tbl_id='+$('[name="prt_id"]').val() + '&filnam=' + imageFiles,
+            type: 'POST',
+            async: false,
+            success: function( data ) {
+                // alert(data)
+                try {
+                    $.ajax({
+                        url: 'gallery/uploads.gallery.php',
+                        data: 'tblnam=STRUCTURE&tbl_id='+$('[name="str_id"]', structureForm).val(),
+                        type: 'GET',
+                        async: false,
+                        success: function( data ) {
+
+                            $('#galleryImages').html(data);
+
+                            $.msgGrowl ({
+                                type: 'success'
+                                , title: 'Gallery Retrieved'
+                                , text: 'Gallery Retrieved'
+                            });
+
+                        },
+                        error: function (x, e) {
+                            throwAjaxError(x, e);
+                        }
+                    });
+                }
+                catch (ex) {
+                    $.msgGrowl ({
+                        type: 'error'
+                        , title: 'Error'
+                        , text: ex
+                    });
+                }
+            },
+            error: function (x, e) {
+                throwAjaxError(x, e);
+            }
+        });
+
+        // $('#galleryImagesDiv').show();
+        // $('#addImageBtn').show();
+        // $('#galleryImages').show();
+        // $('#updateGalleryImagesBtn').hide();
+        // $('#cancelGalleryImagesBtn').hide();
+        // $('#productimagepicker').hide();
+    });
+
+}
+
+
+function elFinderBrowser (field_name, url, type, win) {
+    tinymce.activeEditor.windowManager.open({
+        file: 'system/elfindertiny.php',
+        title: 'File Browser',
+        width: 900,
+        height: 600,
+        resizable: 'yes'
+    }, {
+        setUrl: function (url) {
+            win.document.getElementById(field_name).value = url;
+        }
+    });
+    return false;
+}

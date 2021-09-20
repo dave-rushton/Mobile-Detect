@@ -1,0 +1,1 @@
+#galleryListImages .img{display:inline-block;position:relative}#galleryListImages.gallery{position:relative}#galleryListImages.gallery li{box-sizing:border-box;padding:15px 30px;float:left;width:100%}#galleryListImages.gallery li:nth-child(2n+1){background-color:#eee}#galleryListImages .moveUpload{position:absolute;top:12px;right:12px;font-size:16px}

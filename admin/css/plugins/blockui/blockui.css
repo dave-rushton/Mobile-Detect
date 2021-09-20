@@ -1,0 +1,7 @@
+div.growlUI { }
+div.growlUI h1 {
+	color: white; padding: 5px; text-align: left; font-size: 14px; line-height: 1em; margin: 0 !important; display: inline-block; width: 100%;
+}
+div.growlUI h2 {
+    color: white; padding: 5px; text-align: left; font-size: 10px; line-height: 1em; margin: 0 !important; display: inline-block; width: 100%;
+}

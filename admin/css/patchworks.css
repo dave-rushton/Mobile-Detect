@@ -1,0 +1,23 @@
+.white-text { color: #ffffff; }
+.red-text { color: #ff4433; }
+
+.input-margin-bottom { margin-bottom: 5px !important; }
+
+.dropdown-menu.left { left: auto; right: 0; }
+
+ul.stats li a { text-decoration: none; }
+
+#left.sidebar-fixed { overflow-x: visible; }
+
+.selfclear{zoom:1}
+.selfclear:before{content:"";display:table}
+.selfclear:after{clear:both;content:"";display:table}
+
+#galleryPDFs {}
+#galleryPDFs { margin: 0; padding: 0; }
+#galleryPDFs li:nth-child(1) { border-top: solid 1px #ccc; }
+#galleryPDFs li:nth-child(odd) { background: #eaeaea; }
+#galleryPDFs li { padding: 5px; list-style: none; width: 100%; border-bottom: solid 1px #ccc; }
+#galleryPDFs li a {float: right; margin-left: 10px;}
+#galleryPDFs li a.editUpload {}
+#galleryPDFs li a.deleteUpload {}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pagebuilder>
+    <module>
+        <name>Website</name>
+        <element>
+            <name>Text</name>
+            <file>pages/elements/website/column12.php</file>
+            <form>
+                <field>
+                    <name>pagtxt</name>
+                    <type>editor</type>
+                </field>
+            </form>
+        </element>
+    </module>
+    <module>
+        <name>Media</name>
+        <element>
+            <name>Image</name>
+            <file>pages/elements/media/image.php</file>
+            <form>
+                <field>
+                    <name>imgurl</name>
+                    <type>image</type>
+                </field>
+                <field>
+                    <name>text</name>
+                    <type>editor</type>
+                </field>
+            </form>
+        </element>
+        <element>
+            <name>Gallery</name>
+            <file>pages/elements/media/flexslider-gallery.php</file>
+            <form>
+                <field>
+                    <name>gal_id</name>
+                    <type>gallery</type>
+                </field>
+                <field>
+                    <name>imgsiz</name>
+                    <type>imagesize</type>
+                </field>
+            </form>
+        </element>
+    </module>
+</pagebuilder>

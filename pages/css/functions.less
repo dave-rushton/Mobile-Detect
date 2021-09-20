@@ -1,0 +1,59 @@
+.transition (@prop: all, @time: 0.25s, @ease: linear) {
+  -webkit-transition: @prop @time @ease;
+  -moz-transition: @prop @time @ease;
+  -o-transition: @prop @time @ease;
+  -ms-transition: @prop @time @ease;
+  transition: @prop @time @ease;
+}
+
+/* Mixin */
+.gradient (@origin: top, @start: #ffffff, @stop: #000000) {
+  background-color: @start;
+  background-image: -webkit-linear-gradient(@origin, @start, @stop);
+  background-image: -moz-linear-gradient(@origin, @start, @stop);
+  background-image: -o-linear-gradient(@origin, @start, @stop);
+  background-image: -ms-linear-gradient(@origin, @start, @stop);
+  background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.quick-gradient (@origin: top, @alpha: 0.2) {
+  background-image: -webkit-linear-gradient(@origin, rgba(255,255,255, 0.0), rgba(255,255,255,@alpha));
+  background-image: -moz-linear-gradient(@origin, rgba(255,255,255, 0.0), rgba(255,255,255,@alpha));
+  background-image: -o-linear-gradient(@origin, rgba(255,255,255, 0.0), rgba(255,255,255,@alpha));
+  background-image: -ms-linear-gradient(@origin, rgba(255,255,255, 0.0), rgba(255,255,255,@alpha));
+  background-image: linear-gradient(@origin, rgba(255,255,255, 0.0), rgba(255,255,255,@alpha));
+}
+
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.3) {
+  -webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  -moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+  box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
+.selfclear() {
+  zoom: 1;
+  &:before {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+.gutter(@main-left-right-gap){
+  .row{
+    margin-left: -@main-left-right-gap;
+    margin-right: -@main-left-right-gap;
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3,
+    .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+    .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8,
+    .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10,
+    .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+      padding-left: @main-left-right-gap;
+      padding-right: @main-left-right-gap;
+    }
+  }
+}

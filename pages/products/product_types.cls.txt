@@ -1,0 +1,11 @@
+SELECT
+				p.*,
+				u.filnam AS prtimg
+				FROM producttypes p
+				LEFT OUTER JOIN uploads u ON u.tblnam = "PRDTYPE" AND u.tbl_id = p.prt_id
+				WHERE TRUE AND p.seourl = :seourl  GROUP BY p.prt_id 
+Array
+(
+    [seourl] => womens-weekly--beach-club-ladies-cable-gilet
+)
+

@@ -1,0 +1,50 @@
+Array (
+
+[region] =>
+[AAV] => 00000
+[authAmountString] => £7.42
+[_SP_charEnc] => UTF-8
+[desc] => FASTLINE PURCHASE
+[tel] =>
+[address1] => TEST
+[countryMatch] => S
+[address2] =>
+[cartId] => FASTLINE
+[address3] =>
+[lang] => en
+[rawAuthCode] => A
+[callbackPW] =>
+[transStatus] => Y
+[amountString] => £7.42
+[authCost] => 7.42
+[currency] => GBP
+[installation] => 1028202
+[amount] => 7.42
+[wafMerchMessage] => waf.warning
+[countryString] => United Kingdom
+[displayAddress] => TEST TEST
+[transTime] => 1422613470082
+[name] => TEST
+[testMode] => 100
+[routeKey] => ECMC-SSL
+[ipAddress] => 85.95.105.33
+[fax] =>
+[rawAuthMessage] => cardbe.msg.authorised
+[instId] => 1028202
+[AVS] => 1111
+[compName] => Fastline Group ltd
+[authAmount] => 7.42
+[postcode] =>
+[cardType] => MasterCard
+[cost] => 7.42
+[authCurrency] => GBP
+[country] => GB
+[charenc] => UTF-8
+[email] => projects@seventy9.co.uk
+[address] => TEST TEST
+[transId] => 3021913770
+[msgType] => authResult
+[town] => TEST
+[authMode] => A )
+
+Array ( [installation] => 1028202 [msgType] => authResult )

@@ -1,0 +1,88 @@
+﻿.exampletable {
+
+	background-color: #e0efa6;
+
+	border: 1px solid #bcc98b;
+
+	padding: 10px;
+
+	width: 152px;
+
+	height: 253px;
+
+}
+
+.background {
+
+	background-color: #f1f1e4;
+
+}
+
+.h3 {
+
+	color: #8f9c5e;
+
+	font-family: Calibri;
+
+	font-size: 16px;
+
+	font-weight: bold;
+
+	margin-bottom: 9px;
+
+}
+
+.text {
+
+	color: #444b2a;
+
+	font-size: 14px;
+
+	font-family: Calibri;
+
+}
+
+.addresstable {
+
+	background-color: #e0efa6;
+
+	border: 1px solid #bcc98b;
+
+	padding: 20px;
+
+	width: 370px;
+
+}
+
+.h2 {
+
+	color: #8f9c5e;
+
+	font-family: Calibri;
+
+	font-size: 20px;
+
+	font-weight: bold;
+
+	font-family: Calibri;
+
+}
+
+.button {
+
+	background-color: #dce0cc;
+
+	border: 1px solid #c1cda8;
+
+}
+
+.textbox {
+
+	color: #444b2a;
+
+	font-size: 14px;
+
+	font-family: Calibri;
+
+}
+

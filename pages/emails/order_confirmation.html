@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order confirmation</title>
+</head>
+<body style="margin: 0 0 15px 0; padding: 0;">
+<center>
+    <table align="center" width="900" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+            <td style=" width:900px; padding: 1em 1em 2em 0">
+                <center><img height="70" src="{WEB_ROOT}/img/logo.jpg" alt="{COMPANY}"></center>
+            </td>
+        </tr>
+        <tr>
+            <td style=" width:900px; padding-bottom: 30px;color:#000; text-align: center;">
+                <h1 style="text-transform: uppercase; font-size: 18px; margin: 0;">Thank you for your order</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; padding:0;  width:900px;">
+                <table cellpadding="0" cellspacing="0" >
+                    <tr>
+                        <td style="text-align: left;color:#000; vertical-align: top;" width="450px">
+                           {COMPANY_ADDRESS}
+                        </td>
+                        <td align="right" style="text-align: right;color:#000; vertical-align: top;"  width="450px">
+                            <h1 style="text-transform: uppercase; font-size: 18px; margin: 0;">RECEIPT</h1><br/>
+                            ORDER: #{ORDER_ID}<br/>
+                            DATE: {ORDER_DATE}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-bottom: 30px; vertical-align: top; text-align: center;">
+                <table cellpadding="0" cellspacing="0" >
+                    <tr>
+                        <td width="450" style="padding: 2em 0 ; vertical-align: top;">
+                            <h1 style="text-transform: uppercase; font-size: 16px; padding-bottom: 1em; border-bottom: 1px solid #000000">Contact Details</h1><br/>
+                            <font style="font-size: 14px">
+                                {BILLING_NAME}<br/>
+
+                                    {BILLING_ADDRESS}
+                                <br/>
+                                {BILLING_EMAIL}<br/>
+                                {BILLING_TEL}
+                            </font>
+                        </td>
+                        <td width="450" style="padding: 2em 0 ;vertical-align: top;" >
+                            <h1 style="text-transform: uppercase; font-size: 16px; padding-bottom: 1em; border-bottom: 1px solid #000000">Delivery Address</h1><br/>
+                            <font style="font-size: 14px">
+                                {CONTACT_NAME}<br/>
+
+                                    {CONTACT_ADDRESS}
+                               <br/>
+                                {CONTACT_EMAIL}<br/>
+                                {CONTACT_TEL}
+                            </font>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table width="900" cellpadding="0" cellspacing="0" >
+        <tr id="order">
+            <td style="padding: 1em 0;">
+                <table width="900" align="center" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                    <thead>
+                    <tr style="border-bottom: 1px solid #000000;">
+                        <td width="100" style="font-size: 12px; font-weight: bold; color: #000000;">
+                            QUANTITY
+                        </td>
+                        <td width="600" style="font-size: 12px; font-weight: bold; color: #000000;">
+                            PRODUCT
+                        </td>
+                        <td width="100" style="font-size: 12px; font-weight: bold; text-align: right; color: #000000;">
+                            PRICE
+                        </td>
+                        <td width="100" style="font-size: 12px; font-weight: bold; text-align: right; color: #000000;">
+                            TOTAL
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {ORDERLINES}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td width="300"></td>
+                        <td colspan="4" align="right" style="padding-top:1em;font-size: 16px;">
+                            <table width="375">
+                                <tr>
+                                    <td style="text-align: left; padding-top: 0em; font-weight: bold;">
+                                        Payment method:
+                                    </td>
+                                    <td style="text-align: right; padding-top: 0em; font-weight: 700; color: #000000">
+                                        {PAYMENT}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-top: 0em; font-weight: bold;">
+                                        Subtotal:
+                                    </td>
+                                    <td style="text-align: right; padding-top: 0em; font-weight: 700; color: #000000">
+                                        &pound;{SUBTOTAL}<br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-top: 0em; font-weight: bold;">
+                                        Shipping:
+                                    </td>
+                                    <td style="text-align: right; padding-top: 0em; font-weight: 700; color: #000000">
+                                        &pound;{SHIPPING}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-top: 0em; font-weight: bold;">
+                                        VAT:
+                                    </td>
+                                    <td style="text-align: right; padding-top: 0em; font-weight: 700; color: #000000">
+                                        &pound;{VAT}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding-top: 0em; font-weight: bold;">
+                                        Total:
+                                    </td>
+                                    <td style="text-align: right; padding-top: 0em; font-weight: 700; color: #000000">
+                                        &pound;{TOTAL}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </td>
+        </tr>
+        <tr id="footer">
+            <td>
+                <table width="900" align="center" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                    <tr>
+                        <td>
+                            <table width="460" align="center" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                                <tr>
+                                    <td>
+                                        <strong>We will endeavour to deliver your goods within two days of the order being placed</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+</html>

@@ -1,0 +1,170 @@
+
+
+####################
+##### ARTICLES #####
+####################
+
+#article categories
+RewriteRule ^([a-z0-9_-]+)/categories/([a-z0-9_-]+)$ index.php?seourl=$1&arttyp=$2 [QSA]
+
+#article page
+RewriteRule ^([a-z0-9_-]+)/page/([0-9]+)$ index.php?seourl=$1&pag_no=$2
+
+#article
+RewriteRule ^([a-z0-9_-]+)/article/([a-z0-9_-]+)$ index.php?seourl=$1&artseo=$2
+
+#archive ym
+RewriteRule ^([a-z0-9_-]+)/archive/([0-9]+)/([0-9]+)$ index.php?seourl=$1&year=$2&month=$3
+
+#archive y
+RewriteRule ^([a-z0-9_-]+)/archive/([0-9]+)$ index.php?seourl=$1&year=$2
+
+
+#########################
+##### WEB GALLERIES #####
+#########################
+
+RewriteRule ^([a-z0-9-_]+)/gallery/([a-z0-9-_]+)$ index.php?seourl=$1&galseo=$2
+
+
+
+##############
+### EVENTS ###
+##############
+
+RewriteRule ^([a-z0-9-_]+)/event/([a-z0-9-_]+)$ index.php?seourl=$1&evtseo=$2
+RewriteRule ^([a-z0-9-_]+)/eventdate/([0-9]+)$ index.php?seourl=$1&boo_id=$2
+RewriteRule ^([a-z0-9-_]+)/eventbooking/([a-z0-9-_]+)/([a-z0-9-_]+)$ index.php?seourl=$1&bookingaction=$2&boo_id=$3
+RewriteRule ^([a-z0-9-_]+)/ordergateway/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&stepno=$2&boo_id=$3
+
+
+
+############################
+##### PRODCT CATALOGUE #####
+############################
+
+
+#product categories
+RewriteRule ^([a-z0-9-_]+)/productcategory/([a-z0-9-_]+)/group/([a-z0-9-_]+)$ index.php?seourl=$1&prdcat=$2&atrseo=$3 [QSA]
+RewriteRule ^([a-z0-9-_]+)/productcategory/([a-z0-9-_]+)$ index.php?seourl=$1&prdcat=$2 [QSA]
+
+#product departments
+RewriteRule ^([a-z0-9-_]+)/department/([a-z0-9-_]+)/page/([0-9]+)$ index.php?seourl=$1&catseo=$2&pag_no=$3 [QSA]
+RewriteRule ^([a-z0-9-_]+)/department/([a-z0-9-_]+)$ index.php?seourl=$1&catseo=$2 [QSA]
+
+#products group
+RewriteRule ^([a-z0-9-_]+)/productgroup/([a-z0-9-_]+)/page/([0-9]+)$ index.php?seourl=$1&atrseo=$2&pag_no=$3 [QSA]
+RewriteRule ^([a-z0-9-_]+)/productgroup/([a-z0-9-_]+)$ index.php?seourl=$1&atrseo=$2 [QSA]
+
+#products group paging
+RewriteRule ^([a-z0-9-_]+)/productgroup/([a-z0-9-_]+)/page/([0-9]+)$ index.php?seourl=$1&atrseo=$2&pag_no=$3 [QSA]
+
+#products paging
+RewriteRule ^([a-z0-9-_]+)/page/([0-9]+)$ index.php?seourl=$1&pag_no=$2
+
+#producttype
+RewriteRule ^([a-z0-9-_]+)/producttype/([a-z0-9-_]+)$ index.php?seourl=$1&prtseo=$2 [QSA]
+RewriteRule ^([a-z0-9-_]+)/producttype/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&prt_id=$2&prtseo=$3 [QSA]
+
+#product type > product list
+RewriteRule ^([a-z0-9-_]+)/productlist/([a-z0-9-_]+)$ index.php?seourl=$1&prtseo=$2&view=products [QSA]
+RewriteRule ^([a-z0-9-_]+)/productlist/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&prt_id=$2&prtseo=$3&view=products [QSA]
+
+#individual product
+RewriteRule ^([a-z0-9-_]+)/productfull/([a-z0-9-_]+)$ index.php?seourl=$1&prdseo=$2&view=product [QSA]
+RewriteRule ^([a-z0-9-_]+)/productfull/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&prd_id=$2&prdseo=$3&view=product [QSA]
+
+#product
+RewriteRule ^([a-z0-9-_]+)/product/([a-z0-9-_]+)$ index.php?seourl=$1&prdseo=$2
+
+
+#shop structure
+RewriteRule ^([a-z0-9-_]+)/category/([0-9]+)/$ index.php?seourl=$1&str_id=$2 [QSA]
+RewriteRule ^([a-z0-9-_]+)/category/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&str_id=$2&strseo=$3 [QSA]
+RewriteRule ^([a-z0-9-_]+)/category/([0-9]+)/([a-z0-9-_]+)/producttype/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&str_id=$2&strseo=$3&prt_id=$4&prtseo=$5 [QSA]
+RewriteRule ^([a-z0-9-_]+)/category/([0-9]+)/([a-z0-9-_]+)/productlist/([0-9]+)/([a-z0-9-_]+)$ index.php?seourl=$1&str_id=$2&strseo=$3&prt_id=$4&prtseo=$5&view=products [QSA]
+
+
+#currency
+RewriteRule ^changecurrency/([a-zA-Z]+)$ pages/products/changecurrency.php?currency=$1
+
+
+#############
+### eComm ###
+#############
+
+#user account
+RewriteRule ^useraccount/([a-z0-9_-]+)$ pages/account.php?action=$1 [QSA]
+RewriteRule ^useraccount/editproduct/([a-z0-9-_]+)$ pages/account.php?action=editproduct&prd_id=$1 [QSA]
+
+
+#########################
+##### SHOPPING CART #####
+#########################
+
+#shoppingcart control
+RewriteRule ^shoppingcart/([a-z]+)/([0-9]+)$ pages/shoppingcart/shoppingcart_control.php?action=$1&prd_id=$2 [QSA]
+#shoppingcart control
+RewriteRule ^shoppingcart/([a-z]+)/([a-zA-Z0-9]+)$ pages/shoppingcart/shoppingcart_control.php?action=$1&prd_id=$2 [QSA]
+
+
+
+####################
+##### CHECKOUT #####
+####################
+
+#shoppingcart control
+RewriteRule ^checkout/([a-zA-Z0-9]+)$ pages/shoppingcart.php?action=$1 [QSA]
+
+
+
+#####################
+##### LOCATIONS #####
+#####################
+
+#locations
+RewriteRule ^([a-z0-9_-]+)/location/([a-z0-9_-]+)$ index.php?seourl=$1&locseo=$2 [QSA]
+
+
+###################
+##### BASKETS #####
+###################
+
+#locations
+RewriteRule ^([a-z0-9_-]+)/basket/([a-z0-9_-]+)$ pages/basket.php?seourl=$1&bsk_id=$2 [QSA]
+RewriteRule ^([a-z0-9_-]+)/basket/([a-z0-9_-]+)/([a-z0-9_-]+)$ pages/basket.php?seourl=$1&bsk_id=$2&bskseo=$3 [QSA]
+RewriteRule ^([a-z0-9_-]+)/basketoptions/([a-z0-9_-]+)/([a-z0-9_-]+)$ pages/basket.php?seourl=$1&bsk_id=$2&bskseo=$3&action=options [QSA]
+#RewriteRule ^([a-z0-9_-]+)/basketsummary/([a-z0-9_-]+)/([a-z0-9_-]+)$ pages/basket.php?seourl=$1&bsk_id=$2&bskseo=$3&action=summary [QSA]
+RewriteRule ^([a-z0-9_-]+)/customer$ pages/basket.php?seourl=$1&action=customer [QSA]
+RewriteRule ^([a-z0-9_-]+)/summary pages/basket.php?seourl=$1&action=summary [QSA]
+
+
+RewriteRule ^([a-z0-9_-]+)/paymentsuccess/([a-z0-9_-]+)/([a-z0-9_-]+) pages/basket/basket_control.php?seourl=$1&action=checkout&tranid=$2&orderref=$3 [QSA]
+RewriteRule ^([a-z0-9_-]+)/paymentsuccess/([a-z0-9_-]+) pages/basket/basket_control.php?seourl=$1&action=checkout&tranid=$2 [QSA]
+
+#RewriteRule ^([a-z0-9_-]+)/payment pages/basket.php?seourl=$1&action=payment [QSA]
+
+RewriteRule ^([a-z0-9_-]+)/updatedetails pages/basket/basket_control.php?seourl=$1&action=updatecustomer [QSA]
+RewriteRule ^([a-z0-9_-]+)/payment pages/basket/basket_control.php?seourl=$1&action=checkout [QSA]
+RewriteRule ^([a-z0-9_-]+)/complete pages/basket.php?seourl=$1&action=complete [QSA]
+RewriteRule ^([a-z0-9_-]+)/topay pages/basket.php?seourl=$1&action=topay [QSA]
+
+RewriteRule ^([a-z0-9_-]+)/savequote pages/basket/basket_control.php?seourl=$1&action=savequote [QSA]
+RewriteRule ^([a-z0-9_-]+)/paylaterorder pages/basket/basket_control.php?seourl=$1&action=saveorder [QSA]
+RewriteRule ^([a-z0-9_-]+)/retrievequote pages/basket/basket_control.php?seourl=$1&action=retrievequote [QSA]
+RewriteRule ^([a-z0-9_-]+)/basketupdate/([a-z0-9_-]+)/([0-9]+)$ pages/basket/basket_control.php?seourl=$1&bsk_id=$2&bskqty=$3&action=update [QSA]
+RewriteRule ^([a-z0-9_-]+)/shopping-cart$ pages/basket.php?seourl=$1&action=cart [QSA]
+
+##########################
+##### BASKET CONTROL #####
+##########################
+
+#shoppingcart control
+RewriteRule ^basketcontrol/([a-z]+)$ pages/basket/basket_control.php?action=$1 [QSA]
+
+
+
+#generic
+RewriteRule ^([a-z0-9_-]+)$ index.php?seourl=$1 [QSA]
+
+</IfModule>
