@@ -1,9 +1,10 @@
 $(function(){
-	
-	
+
+
 	$('#formsBody').on('click', '.deleteFormBtn', function (e) {
 		e.preventDefault();
-		
+
+
 		var atrId = $(this).data('atr_id');
 		
 		var row = $(this).parent().parent();

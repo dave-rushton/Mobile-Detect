@@ -129,12 +129,8 @@
                         <a href="custom/basketreport2.php">Basket Report (No VAT)</a>
                     </li>
                     <li>
-                        <a href="import/import_products.php">Import Products</a>
-                    </li>
-                    <li>
                         <a href="tempobjects/tempobjects.php">Basket Objects</a>
                     </li>
-
                 </ul>
             </li>
             <li class="">

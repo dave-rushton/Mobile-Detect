@@ -21,13 +21,13 @@ $TmpAtv = new AtvDAO();
 //
 
 $FldArrStr ='';
-$AtrArr = (isset($_GET['fldnum'])) ? $_GET['fldnum'] : NULL;
+$AtrArr = (isset($_GET['fldnum'])) ? $_GET['fldnum'] : array();
 for ($fldnum=0; $fldnum < count($AtrArr); $fldnum++) {
 	$FldArrStr .= ($FldArrStr == '') ? $AtrArr[$fldnum] : ','.$AtrArr[$fldnum];
 }
 
 $FldValStr ='';
-$AtrVal = (isset($_GET['fld'])) ? $_GET['fld'] : NULL;
+$AtrVal = (isset($_GET['fld'])) ? $_GET['fld'] : array();
 $requestedMatches = 0;
 for ($fldnum=0; $fldnum < count($AtrVal); $fldnum++) {
 	$FldValStr .= ($FldValStr == '') ? $AtrVal[$fldnum] : ','.$AtrVal[$fldnum];
@@ -42,8 +42,10 @@ $Atr_ID = (isset($_GET['atr_id'])) ? $_GET['atr_id'] : NULL;
 $TblNam = (isset($_GET['tblnam'])) ? $_GET['tblnam'] : NULL;
 $Tbl_ID = (isset($_GET['tbl_id'])) ? $_GET['tbl_id'] : NULL;
 
-$attributeSearch = $TmpAtv->searchAttributeValues ( $Atr_ID , $AtrArr, $AtrVal, $TblNam, $Tbl_ID );
-
+$attributeSearch = $TmpAtv->searchAttributeValues( $Atr_ID , $AtrArr, $AtrVal, $TblNam, $Tbl_ID );
+if(empty($attributeSearch)){
+    $attributeSearch = array();
+}
 $products = NULL;
 
 if (count($attributeSearch) > 0) {
@@ -120,9 +122,11 @@ for ($i=0;$i<$tableLength;++$i) {
 	<td>
 		<ul>
 			<?php 
-			$resultSet = NULL;
+
 			$resultSet = $TmpAtv->selectValueSet($Atr_ID, $TblNam, $products[$i]['prd_id'], NULL, NULL, false);
-			
+			if(empty($resultSet)){
+                $resultSet = array();
+            }
 			foreach ($resultSet as $row) { ?>
 			
 			<li><strong><?php echo $row['atllbl']; ?></strong> <?php echo $row['atvval']; ?></li>

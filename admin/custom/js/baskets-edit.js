@@ -176,6 +176,7 @@ $(function(){
 
 
 
+
     $('#productListTable').on('click','.deleteProductBtn', function(e){
         e.preventDefault();
 
@@ -1392,7 +1393,7 @@ function getGallery() {
     $('imageselect').removeClass('active');
 
     $.ajax({
-        url: '/admin/gallery/uploads.gallery.php',
+        url: $('body').data('root')+'/admin/gallery/uploads.gallery.php',
         //todo
         data: 'tblnam=BASKET&tbl_id='+$('[name="bsk_id"]', basketForm).val(),
         type: 'GET',
@@ -1400,18 +1401,6 @@ function getGallery() {
         success: function( data ) {
 
             $('#galleryImages').html(data);
-
-            //
-            // preselect global gallery images based on current gallery
-            //
-
-            //var currentimages = $('#galleryImages').find('img');
-            //
-            //for (i=0;i<currentimages.length;i++) {
-            //
-            //    $("[data-imgfil='" + $(currentimages[i]).attr('src') +"']").addClass('active');
-            //
-            //}
 
             $.msgGrowl ({
                 type: 'success'
@@ -1424,41 +1413,6 @@ function getGallery() {
             throwAjaxError(x, e);
         }
     });
-
-    // GLOBAL IMAGES
-
-    // $(".colorbox-image").colorbox({
-    //     maxWidth: "90%",
-    //     maxHeight: "90%",
-    //     rel: $(this).attr("rel")
-    // });
-
-    //$.ajax({
-    //	url: 'gallery/uploads.gallery.php',
-    //	data: 'tblnam=ARTICLE&tbl_id='+$('[name="art_id"]', articleForm).val(),
-    //	type: 'GET',
-    //	async: false,
-    //	success: function( data ) {
-    //
-    //		$('#galleryImages').html(data);
-    //
-    //		$.msgGrowl ({
-    //			type: 'success'
-    //			, title: 'Gallery Retrieved'
-    //			, text: 'Gallery Retrieved'
-    //		});
-    //
-    //	},
-    //	error: function (x, e) {
-    //		throwAjaxError(x, e);
-    //	}
-    //});
-    //
-    //$(".colorbox-image").colorbox({
-    //	maxWidth: "90%",
-    //	maxHeight: "90%",
-    //	rel: $(this).attr("rel")
-    //});
 
 }
 

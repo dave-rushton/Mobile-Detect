@@ -16,7 +16,7 @@ $editAttrGroup = (isset($_GET['atr_id']) && is_numeric($_GET['atr_id'])) ? $_GET
 $TblNam = (isset($_GET['tblnam'])) ? $_GET['tblnam'] : NULL;
 $Tbl_ID = (isset($_GET['tbl_id']) && is_numeric($_GET['tbl_id'])) ? $_GET['tbl_id'] : NULL;
 $attrGroupRec = NULL;
-$attrLabelRec = NULL;
+$attrLabelRec = array();
 
 if (!is_null($editAttrGroup) && !empty($editAttrGroup)) {
 

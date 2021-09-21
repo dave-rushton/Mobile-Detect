@@ -113,27 +113,31 @@ class AtvDAO extends db {
 				}
 			
 			}
-			
+            $sql = "";
 			if ($joinSql != '') {
 				$sql = "SELECT COUNT(DISTINCT atv.atv_id) AS atv_eq, atr.tblnam, atr.tbl_id, atv.tblnam as RefNam, atv.tbl_id as Ref_ID ";
-				$sql .= " FROM attribute_group atr ";
-				$sql .= " RIGHT JOIN attribute_value atv ";
-				$sql .= "ON (".$joinSql.")";
+				$sql .= " FROM attribute_group atr";
+				$sql .= " RIGHT JOIN attribute_value atv";
+				$sql .= " ON (".$joinSql.")";
 				$sql .= " WHERE atr.atr_id = ".$Atr_ID;
 				$sql .= " GROUP BY atv.tblnam, atv.tbl_id ";
 				$sql .= " ORDER BY atv_eq DESC";
 			} else {
-				$sql = "SELECT DISTINCT atv.tbl_id AS Ref_ID FROM attribute_value atv WHERE atv.atr_id = ".$Atr_ID." AND atv.tblnam = '".$TblNam."'";
+
+				if(!empty($Atr_ID) && !empty($TblNam)){
+                    $sql = "SELECT DISTINCT atv.tbl_id AS Ref_ID FROM attribute_value atv WHERE atv.atr_id = ".$Atr_ID." AND atv.tblnam = '".$TblNam."'";
+                }
 			}
-			
-			//echo '<pre>'.$sql.'</pre>';
-			
-			return  $this->dbConn->query($sql);
-			
+
+			if(!empty($sql)){
+                return  $this->dbConn->query($sql);
+            }
+
 		} else {
 			$sql = "SELECT DISTINCT atv.tbl_id AS Ref_ID FROM attribute_value atv WHERE atv.atr_id = ".$Atr_ID." AND atv.tblnam = '".$TblNam."'";
 		}
-		
+
+        return  "";
 
 	}
 	

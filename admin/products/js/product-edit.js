@@ -597,7 +597,7 @@ function getGallery() {
 
     $.ajax({
         url: 'gallery/uploads.gallery.global.php',
-        data: 'tblnam=GLOBAL&tbl_id=0',
+        data: 'tblnam=PRODUCT&tbl_id=0',
         type: 'GET',
         async: false,
         success: function( data ) {

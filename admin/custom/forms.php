@@ -17,7 +17,7 @@ $attrGroups = $TmpAtr->select(NULL, 'CUSTOM');
 <head>
 <title>Form Listing</title>
 <?php include('../webparts/headdata.php'); ?>
-
+    <script src="<?php echo $patchworks->webRoot;?>admin/custom/js/forms.js"></script>
 </head>
 <?php include('../webparts/navigation.php'); ?>
 <body class="theme-red">

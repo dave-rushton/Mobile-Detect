@@ -119,7 +119,7 @@ $subCategories = $TmpSub->selectByTableName('basket-tags', NULL);
 
 </head>
 <?php include('../webparts/navigation.php'); ?>
-<body class="theme-orange">
+<body class="theme-orange" data-root="<?php echo $patchworks->webRoot?>">
 <div class="container-fluid" id="content">
     <?php include('../webparts/website-left.php'); ?>
     <div id="main">

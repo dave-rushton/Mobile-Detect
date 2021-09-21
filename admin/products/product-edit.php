@@ -536,24 +536,22 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
 
                             </div>
                         </div>
-
-                        <div class="box">
-                            <div class="box-title">
-                                <h3><i class="icon-th"></i> Multi File upload</h3>
-                            </div>
-                            <div class="box-content nopadding">
-                                <div id="plupload" data-resize="<?php echo $patchworks->productImageSizes; ?>">
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
+                    <div class="box">
+                        <div class="box-title">
+                            <h3><i class="icon-th"></i> Multi File upload</h3>
+                        </div>
+                        <div class="box-content nopadding">
+                            <div id="plupload" data-resize="<?php echo $patchworks->productImageSizes; ?>">
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 
 
-            <div class="row-fluid">
+            <div class="row-fluid" style="margin-top: 60px;">
                 <div class="span12">
                     <div class="box">
                         <div class="box-title">
