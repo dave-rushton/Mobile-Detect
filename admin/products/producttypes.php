@@ -2,12 +2,15 @@
 
 require_once('../../config/config.php');
 require_once('../patchworks.php'); 
-require_once("../products/classes/product_types.cls.php");
+require_once("classes/product_types.cls.php");
 
 
 $userAuth = new AuthDAO();
 $loggedIn = $userAuth->loggedIn($_SESSION['s_log_id']);
 if ($loggedIn == 0) header('location: ../login.php');
+
+$TmpPrt = new PrtDAO();
+$productTypes = $TmpPrt->select(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, false);
 
 ?>
 <!doctype html>
@@ -15,54 +18,6 @@ if ($loggedIn == 0) header('location: ../login.php');
 <head>
 <title>Product Types</title>
 <?php include('../webparts/headdata.php'); ?>
-
-    <link rel="stylesheet" href="css/plugins/datatable/TableTools.css">
-
-    <script src="js/plugins/datatable/jquery.dataTables.min.js"></script>
-    <script src="js/plugins/datatable/TableTools.min.js"></script>
-    <script src="js/plugins/datatable/ColReorderWithResize.js"></script>
-    <script src="js/plugins/datatable/ColVis.min.js"></script>
-    <script src="js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
-    <script src="js/plugins/datatable/jquery.dataTables.grouping.js"></script>
-
-    <script src="js/plugins/garlic/garlic.min.js"></script>
-
-    <script>
-
-        $(function(){
-
-
-
-            var oTable = $('#productTypeTable').dataTable({
-                // "bServerSide": true,
-                // "sServerMethod": "GET",
-                "bProcessing": true,
-                "bAutoWidth": false,
-                "bServerSide": false,
-                "bJQueryUI": false,
-                "sAjaxDataProp": "aaData",
-                "iDisplayLength": 9999,
-                "sAjaxSource": "products/producttypes_table.php",
-                "aaSorting": [[ 2, 'asc' ]],
-                "aoColumns": [
-                    { "bSortable ": true, },
-                    { "bSortable ": true,  },
-                    { "bSortable ": false, },
-                    { "bSortable ": true, },
-                    { "bSortable ": true, },
-                ],
-                "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-                    $('td:eq(1)', nRow).html('<a href="products/producttype-edit.php?prt_id=' + aData[0] + '">' + aData[1] + '</a>');
-                    $('td:eq(2)', nRow).html('<a href="products/producttype-edit.php?prt_id=' + aData[0] + '">' + aData[2] + '</a>');
-                    $('td:eq(3)', nRow).html('<a style="text-transform:capitalize;" href="products/producttype-edit.php?prt_id=' + aData[0] + '">' + aData[3] + '</a>');
-                    //$('td:eq(2)', nRow).html('<a href="products/productgroup-edit.php?atr_id=' + aData[3] + '">' + aData[4] + '</a>');
-
-                    return nRow;
-                }
-            });
-        });
-
-    </script>
 
 
 </head>
@@ -91,7 +46,7 @@ if ($loggedIn == 0) header('location: ../login.php');
 						<i class="icon-angle-right"></i>
 					</li>
 					<li>
-						<a href="products/producttypes.php">Product Types</a>
+						<a href="products/product_types.php">Product Types</a>
 					</li>
 				</ul>
 			</div>
@@ -109,15 +64,21 @@ if ($loggedIn == 0) header('location: ../login.php');
 							<table class="table table-bordered table-striped table-highlight" id="productTypeTable">
 							<thead>
 								<tr>
-									<th width="160">ID</th>
-									<th width="320">Manufacturer</th>
-									<th width="320">Product Name</th>
-									<th width="320">Machine Type</th>
-									<th width="50">Done</th>
+									<th>Product Type</th>
+									<th width="50"></th>
 								</tr>
 							</thead>
 							<tbody id="productTypeBody">
-
+								<?php
+								$tableLength = count($productTypes);
+								for ($i=0;$i<$tableLength;++$i) {
+								?>
+								<tr>
+									<td width="100%;"><a href="products/producttype-edit.php?prt_id=<?php echo $productTypes[$i]['prt_id'] ?>"><?php echo $productTypes[$i]['prtnam']; ?></a></td>
+									<td><a href="#" class="sortOrder" data-sub_id="<?php echo $productTypes[$i]['prt_id'] ?>"><i class="icon-reorder"></i></a></td>
+								</tr>
+								
+								<?php } ?>
 							</tbody>
 						</table>
 						</div>

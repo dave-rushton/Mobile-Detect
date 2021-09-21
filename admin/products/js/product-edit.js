@@ -20,9 +20,7 @@ $(function(){
             plugins: "hr,link,image,autolink,lists,layer,table,preview,media,searchreplace,contextmenu,directionality,fullscreen,noneditable,visualchars,nonbreaking,template,advlist,code,paste",
 
             image_advtab: true,
-            templates:[
-                {title: 'Table', description: 'Product Table', url: '../admin/tinymcetemplates/table.html'},
-            ],
+
             toolbar1: "bold italic underline | alignleft aligncenter alignright ",
             toolbar2: "link unlink | bullist code fullscreen pasteword",
 
@@ -123,7 +121,7 @@ $(function(){
 				async: false,
 				success: function( data ) {
 
-                    //alert(data);
+                    // alert(data);
 					
 					try {
 					
@@ -332,6 +330,12 @@ $(function(){
     $('#deleteProductBtn').click(function (e) {
         e.preventDefault();
 
+        //
+        // Check if product is in basket
+        //
+
+
+
         $.msgAlert ({
             type: 'warning'
             , title: 'Delete This Product'
@@ -344,6 +348,8 @@ $(function(){
                     type: 'POST',
                     async: false,
                     success: function( data ) {
+
+                        alert(data);
 
                         var result = JSON.parse(data);
 
@@ -665,7 +671,7 @@ function plupLoad(iElement) {
 	var $el = iElement;
 	$el.pluploadQueue({
 		runtimes : 'html5,gears,flash,silverlight,browserplus',
-		url : 'upload.php?resize=169-130&tblnam=PRODUCT&tbl_id=' + $('[name="prd_id"]', productForm ).val(),
+		url : '../js/plugins/plupload/upload.php?resize=169-130,620-414,960-400,2000-350&tblnam=PRODUCT&tbl_id=' + $('[name="prd_id"]', productForm ).val(),
 		max_file_size : '8mb',
 		chunk_size : '8mb',
 		unique_names : true,

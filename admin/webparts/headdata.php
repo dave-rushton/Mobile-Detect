@@ -35,8 +35,8 @@
 
 <!-- jQuery -->
 <script src="js/jquery.min.js"></script>
-	
-	
+
+
 <!-- Nice Scroll -->
 <script src="js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
 <!-- jQuery UI -->
@@ -81,7 +81,8 @@
 <!-- Theme framework -->
 <!--<script src="js/eakroko.min.js"></script>-->
 <!-- Theme scripts -->
-<script src="js/application.js"></script>
+<!-- TODO HAD TO TURN OFF CUSTOM/BASKETS-EDIT was not working-->
+<!--<script src="js/application.js"></script>-->
 <!-- Just for demonstration -->
 <!--<script src="js/demonstration.js"></script>-->
 

@@ -15,14 +15,14 @@ $(function(){
 				atrLst += (atrLst == '') ? $(this).data('atr_id') : ',' + $(this).data('atr_id');
 				
 			});
-			
+
 			$.ajax({
 				url: 'attributes/attrgroup_script.php',
 				data: 'action=resort&ajax=true&atr_id=' + atrLst,
 				type: 'POST',
 				async: false,
 				success: function( data ) {
-					
+
 					var result = JSON.parse(data);
 					
 					$.msgGrowl ({

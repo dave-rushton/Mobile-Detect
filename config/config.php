@@ -6,7 +6,7 @@ class config
 {
     //S9DEMO
     public $salt = "S{0vp!";
-    public $connStr = 'mysql:host=localhost;dbname=blankcms';
+    public $connStr = 'mysql:host=localhost;dbname=totbgifts';
     public $user = 'root';
     public $password = '';
     public $host = 'localhost';
@@ -14,9 +14,9 @@ class config
     public $dbConn = '';
 
     public $customerName = 'DEMO CMS PHP 8.0';
-    public $webRoot = 'http://localhost/blankcms/';
-    public $pwRoot = 'http://localhost/blankcms/admin/';
-    public $docRoot = 'C:/xampp/htdocs/blankcms/';
+    public $webRoot = 'http://localhost/totbgifts/';
+    public $pwRoot = 'http://localhost/totbgifts/admin/';
+    public $docRoot = 'C:/xampp/htdocs/totbgifts/';
     public $adminEmail = '';
 
     public $SmtpServer = "mail.seventy9.co.uk";

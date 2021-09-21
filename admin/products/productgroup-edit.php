@@ -20,11 +20,13 @@ if (!is_null($editAttrGroup)) {
 	$attrGroupRec = $TmpAtr->select($editAttrGroup, NULL, NULL, NULL, true); 
 }
 
-//$TblNam = 'shopping-departments';
-//$CatDao = new CatDAO();
-//$category = $CatDao->select(NULL, $TblNam, NULL, NULL, true);
+$TblNam = 'shopping-departments';
+$CatDao = new CatDAO();
+$category = $CatDao->select(NULL, $TblNam, NULL, NULL, true);
 $TmpSub = new SubDAO();
-//$subCategories = $TmpSub->select($category->cat_id, NULL, NULL, NULL, false);
+$subCategories = $TmpSub->select($category->cat_id, NULL, NULL, NULL, false);
+
+
 $productCats = $TmpSub->selectByTableName('product-category');
 
 ?>
@@ -107,7 +109,7 @@ $productCats = $TmpSub->selectByTableName('product-category');
 									</div>
 								</div>
 								
-								<div class="control-group hide">
+								<div class="control-group">
 									<label class="control-label">Department<small>parent department</small></label>
 									<div class="controls">
 										<select name="tbl_id">
@@ -128,17 +130,17 @@ $productCats = $TmpSub->selectByTableName('product-category');
 								<div class="control-group">
 									<label class="control-label">Name<small>product group name</small></label>
 									<div class="controls">
-										<input type="text" class="input-block-level" name="atrnam" data-rule-required="true" data-rule-minlength="2" value="<?php echo($attrGroupRec) ? $attrGroupRec->atrnam : ''; ?>">
+										<input type="text" name="atrnam" data-rule-required="true" data-rule-minlength="2" value="<?php echo($attrGroupRec) ? $attrGroupRec->atrnam : ''; ?>">
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">Description<small>short description</small></label>
 									<div class="controls">
-										<textarea name="atrdsc" class="input-block-level"><?php echo($attrGroupRec) ? $attrGroupRec->atrdsc : ''; ?></textarea>
+										<textarea name="atrdsc"><?php echo($attrGroupRec) ? $attrGroupRec->atrdsc : ''; ?></textarea>
 									</div>
 								</div>
 
-                                <div class="control-group hide">
+                                <div class="control-group">
                                     <label class="control-label">Product categories<small>Product tags</small></label>
                                     <div class="controls">
 
@@ -164,19 +166,19 @@ $productCats = $TmpSub->selectByTableName('product-category');
 								<div class="control-group">
 									<label class="control-label">SEO URL<small>SEO friendly URL</small></label>
 									<div class="controls">
-										<input type="text" class="input-block-level" name="seourl" data-rule-required="true" data-rule-minlength="2" value="<?php echo($attrGroupRec) ? $attrGroupRec->seourl : ''; ?>">
+										<input type="text" name="seourl" data-rule-required="true" data-rule-minlength="2" value="<?php echo($attrGroupRec) ? $attrGroupRec->seourl : ''; ?>">
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">SEO Keywords<small>SEO keywords</small></label>
 									<div class="controls">
-										<textarea name="seokey" class="input-block-level"><?php echo($attrGroupRec) ? $attrGroupRec->seokey : ''; ?></textarea>
+										<textarea name="seokey"><?php echo($attrGroupRec) ? $attrGroupRec->seokey : ''; ?></textarea>
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">SEO Description<small>SEO descriptions</small></label>
 									<div class="controls">
-										<textarea name="seodsc" class="input-block-level"><?php echo($attrGroupRec) ? $attrGroupRec->seodsc : ''; ?></textarea>
+										<textarea name="seodsc"><?php echo($attrGroupRec) ? $attrGroupRec->seodsc : ''; ?></textarea>
 									</div>
 								</div>
 								
@@ -293,171 +295,33 @@ $productCats = $TmpSub->selectByTableName('product-category');
 											Required </label>
 									</div>
 								</div>
-
-
-                                    <div class="control-group">
-                                        <label class="control-label">Search on website<small>display field to user</small></label>
-                                        <div class="controls">
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="srcabl" value="1">
-                                                Visible to users?</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label class="control-label">Search Type<small>how to search the data</small></label>
-                                        <div class="controls">
-                                            <select name="srctyp">
-                                                <option value="default">Default</option>
-                                                <option value="list">List</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="control-group hide">
-                                        <label class="control-label">Specialist Field<small>if field is used for functionality</small></label>
-                                        <div class="controls">
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="atlspc" value="1">
-                                                Special Field </label>
-                                        </div>
-                                    </div>
-
-
+								<div class="control-group">
+									<label class="control-label">Show on website<small>display field to user</small></label>
+									<div class="controls">
+										<label class="checkbox">
+											<input type="checkbox" name="srcabl" value="1">
+											Visible to users?</label>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Search Type<small>how to search the data</small></label>
+									<div class="controls">
+										<select name="srctyp">
+											<option value="text">Text</option>
+										</select>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Specialist Field<small>if field is used for functionality</small></label>
+									<div class="controls">
+										<label class="checkbox">
+											<input type="checkbox" name="atlspc" value="1">
+											Special Field </label>
+									</div>
+								</div>
 							</form>
 						</div>
 					</div>
-
-
-
-                    <form class="form-horizontal form-validate" action="#" id="languageForm" style="display: none">
-                    <div class="box">
-                        <div class="box-title">
-                            <h3>
-                                <i class="icon-comments"></i>
-                                Language
-                            </h3>
-                            <ul class="tabs">
-                                <li class="active">
-                                    <a href="#french" data-toggle="tab">French</a>
-                                </li>
-                                <li>
-                                    <a href="#german" data-toggle="tab">German</a>
-                                </li>
-                                <li class="">
-                                    <a href="#spanish" data-toggle="tab">Spanish</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="box-content">
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="french">
-
-                                    <div class="control-group">
-                                        <label class="control-label">French Name</label>
-
-                                        <div class="controls">
-                                            <input type="text" class="input-block-level customfield"
-                                                   name="fr_prtnam"
-                                                   value="<?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'fr_prtnam', false) : ''; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">SEO Keywords</label>
-
-                                        <div class="controls">
-
-                                            <textarea name="fr_keywrd" class="input-block-level customfield"><?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'fr_keywrd', false) : ''; ?></textarea>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">SEO Description</label>
-
-                                        <div class="controls">
-
-                                            <textarea name="fr_seodsc" class="input-block-level customfield"><?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'fr_seodsc', false) : ''; ?></textarea>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-pane" id="german">
-
-                                    <div class="control-group">
-                                        <label class="control-label">German Name</label>
-
-                                        <div class="controls">
-                                            <input type="text" class="input-block-level customfield"
-                                                   name="ge_prtnam"
-                                                   value="<?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'ge_prtnam', false) : ''; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">SEO Keywords</label>
-
-                                        <div class="controls">
-
-                                            <textarea name="ge_keywrd" class="input-block-level customfield"><?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'ge_keywrd', false) : ''; ?></textarea>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">SEO Description</label>
-
-                                        <div class="controls">
-
-                                            <textarea name="ge_seodsc" class="input-block-level customfield"><?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'ge_seodsc', false) : ''; ?></textarea>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="tab-pane" id="spanish">
-
-                                    <div class="control-group">
-                                        <label class="control-label">Spanish Name</label>
-
-                                        <div class="controls">
-                                            <input type="text" class="input-block-level customfield"
-                                                   name="sp_prtnam"
-                                                   value="<?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'sp_prtnam', false) : ''; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">SEO Keywords</label>
-
-                                        <div class="controls">
-
-                                            <textarea name="sp_keywrd" class="input-block-level customfield"><?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'sp_keywrd', false) : ''; ?></textarea>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <label class="control-label">SEO Description</label>
-
-                                        <div class="controls">
-
-                                            <textarea name="sp_seodsc" class="input-block-level customfield"><?php echo (isset($attrGroupRec->atrobj)) ? $patchworks->getJSONVariable($attrGroupRec->atrobj, 'sp_seodsc', false) : ''; ?></textarea>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    </form>
-
-
-
 				</div>
 			</div>
 			

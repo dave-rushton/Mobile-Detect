@@ -199,7 +199,6 @@ $customers = $TmpPla->select(NULL, 'CUS', NULL, NULL);
                                 <thead>
                                 <tr>
                                     <th>Variant</th>
-                                    <th>Customer</th>
                                     <th style="width: 80px;">Qty</th>
                                     <th style="width: 80px;">Price</th>
                                     <th style="width: 20px"></th>

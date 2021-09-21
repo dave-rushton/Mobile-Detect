@@ -142,7 +142,7 @@ function plupLoad(iElement) {
 	var $el = iElement;
 	$el.pluploadQueue({
 		runtimes : 'html5,gears,flash,silverlight,browserplus',
-		url : '../js/plugins/plupload/upload.php?resize=169-130,620-414&tblnam=PRDCAT&tbl_id=' + $('[name="sub_id"]', subCategoriesForm ).val(),
+		url : '../js/plugins/plupload/upload.php?resize=169-130,620-414,960-400,2000-350&tblnam=PRDCAT&tbl_id=' + $('[name="sub_id"]', subCategoriesForm ).val(),
 		max_file_size : '10mb',
 		chunk_size : '2mb',
 		unique_names : true,

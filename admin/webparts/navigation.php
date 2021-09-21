@@ -92,46 +92,52 @@
 			</li>
 			<?php } ?>
 
-            <?php if (1==2) { ?>
-
-
-            <li>
+            <li class="">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                    <i class="icon-tasks"></i>
-                    <span>Custom</span>
+                    <i class="icon-shopping-cart"></i>
+                    <span>Totb Gifts System</span>
                     <span class="caret"></span>
                 </a>
-
-
                 <ul class="dropdown-menu">
 
                     <li>
-                        <a href="custom/services.php">History</a>
+                        <a href="custom/baskets.php">Baskets</a>
                     </li>
 
-<!--                    <li class="dropdown-submenu">-->
-<!--                        <a href="#">Product Details</a>-->
-<!--                        <ul class="dropdown-menu">-->
-<!--                            <li>-->
-<!--                                <a href="products/structure.php">Shop Structure</a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a href="products/productgroups.php">Product Groups</a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a href="products/product-category.php">Product Categories</a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </li>-->
+                    <li>
+                        <a href="custom/forms.php">Custom Forms</a>
+                    </li>
+                    <li>
+                        <a href="custom/baskettags.php">Basket Tags</a>
+                    </li>
+                    <li>
+                        <a href="custom/basketgroups.php">Basket Groups</a>
+                    </li>
+                    <li>
+                        <a href="custom/leadtime.php">Increment Lead Days</a>
+                    </li>
+                    <li>
+                        <a href="custom/productreport.php">Product Report (No Price)</a>
+                    </li>
+                    <li>
+                        <a href="custom/productreport2.php">Product Report (No Leadtime)</a>
+                    </li>
+                    <li>
+                        <a href="custom/basketreport.php">Basket Report (No Weight)</a>
+                    </li>
+                    <li>
+                        <a href="custom/basketreport2.php">Basket Report (No VAT)</a>
+                    </li>
+                    <li>
+                        <a href="import/import_products.php">Import Products</a>
+                    </li>
+                    <li>
+                        <a href="tempobjects/tempobjects.php">Basket Objects</a>
+                    </li>
 
                 </ul>
-
             </li>
-
-            <?php } ?>
-
-
-            <li>
+            <li class="">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                     <i class="icon-shopping-cart"></i>
                     <span>Products</span>
@@ -140,30 +146,82 @@
 
                 <ul class="dropdown-menu">
 
-                    <li>
-                        <a href="products/producttypes.php">Products</a>
-                    </li>
-
                     <li class="dropdown-submenu">
-                        <a href="#">Product Details</a>
+                        <a href="#">Shop Structure</a>
                         <ul class="dropdown-menu">
+
                             <li>
-                                <a href="products/structure.php">Shop Structure</a>
+                                <a href="products/departments.php">Departments</a>
                             </li>
                             <li>
                                 <a href="products/productgroups.php">Product Groups</a>
                             </li>
+                            <!--                            <li>-->
+                            <!--                                <a href="products/producttypes.php">Product Types</a>-->
+                            <!--                            </li>-->
                             <li>
                                 <a href="products/product-category.php">Product Categories</a>
                             </li>
+                            <li>
+                                <a href="products/statuscodes.php">Status Codes</a>
+                            </li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="products/products.php">Products</a>
+                    </li>
+                    <li>
+                        <a href="products/productlisting.php">Product Listing</a>
+                    </li>
+
 
                 </ul>
 
             </li>
 
+            <li class="">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                    <i class="icon-shopping-cart"></i>
+                    <span>eCommerce</span>
+                    <span class="caret"></span>
+                </a>
 
+                <ul class="dropdown-menu">
+
+                    <li class="dropdown-submenu">
+                        <a href="#">Extras</a>
+                        <ul class="dropdown-menu">
+
+                            <li>
+                                <a href="ecommerce/vat.php">VAT</a>
+                            </li>
+                            <li>
+                                <a href="ecommerce/delivery.php">Delivery Info</a>
+                            </li>
+                            <li>
+                                <a href="ecommerce/discounts.php">Discounts</a>
+                            </li>
+                            <li>
+                                <a href="ecommerce/multibuy.php">Multibuy</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="ecommerce/orders.php">Orders</a>
+                    </li>
+                    <li>
+                        <a href="ecommerce/customers.php">Customers</a>
+                    </li>
+                    <li>
+                        <a href="ecommerce/ecommprop.php">Properties</a>
+                    </li>
+
+                </ul>
+
+            </li>
 
 
 

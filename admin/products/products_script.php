@@ -3,6 +3,7 @@
 require_once("../../config/config.php");
 require_once("../patchworks.php");
 require_once("classes/products.cls.php");
+require_once("../custom/classes/baskets.cls.php");
 
 $userAuth = new AuthDAO();
 $loggedIn = $userAuth->loggedIn($_SESSION['s_log_id']);
@@ -24,7 +25,7 @@ if ($loggedIn == 0) {
 }
 
 
-$Prd_ID = (isset($_REQUEST['prd_id'])) ? $_REQUEST['prd_id'] : die('FAIL');
+$Prd_ID = (isset($_REQUEST['prd_id']) && is_numeric($_REQUEST['prd_id'])) ? $_REQUEST['prd_id'] : die('FAIL');
 
 if (is_null($Prd_ID)) {
 	$throwJSON['title'] = 'Invalid Product';
@@ -37,7 +38,19 @@ $PrdDao = new PrdDAO();
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'update') {
 
 	$PrdObj = $PrdDao->select($Prd_ID, NULL, NULL, NULL, NULL, NULL, NULL, true);
-	
+
+    //
+    // Check Product Name
+    //
+
+    $checkName = $PrdDao->checkProductName($Prd_ID, $_REQUEST['prdnam']);
+    if ( isset($checkName->prdnam) ) {
+        $throwJSON['title'] = 'Product Name Invalid';
+        $throwJSON['description'] = 'Product name exists';
+        $throwJSON['type'] = 'error';
+        die(json_encode($throwJSON));
+    }
+
 	if (!$PrdObj) {
 		
 		$PrdObj = new stdClass();
@@ -74,7 +87,9 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'update') {
         $PrdObj->srtord = 1000;
 
         $PrdObj->vat_id = 0;
-        $PrdObj->prdobj = '';
+        $PrdObj->vegan = 0;
+        $PrdObj->vegetarian = 0;
+        $PrdObj->gluten_free = 0;
 
 		if (isset($_REQUEST['tblnam'])) $PrdObj->tblnam = $_REQUEST['tblnam'];
 		if (isset($_REQUEST['tbl_id']) && is_numeric($_REQUEST['tbl_id'])) $PrdObj->tbl_id = $_REQUEST['tbl_id'];
@@ -108,9 +123,9 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'update') {
         if (isset($_REQUEST['srtord']) && is_numeric($_REQUEST['srtord'])) $PrdObj->srtord = $_REQUEST['srtord'];
 
         if (isset($_REQUEST['vat_id']) && is_numeric($_REQUEST['vat_id'])) $PrdObj->vat_id = $_REQUEST['vat_id'];
-
-        if (isset($_REQUEST['prdobj'])) $PrdObj->prdobj = $_REQUEST['prdobj'];
-
+        if (isset($_REQUEST['vegan']) && is_numeric($_REQUEST['vegan'])) $PrdObj->vegan = $_REQUEST['vegan'];
+        if (isset($_REQUEST['vegetarian']) && is_numeric($_REQUEST['vegetarian'])) $PrdObj->vegetarian = $_REQUEST['vegetarian'];
+        if (isset($_REQUEST['gluten_free']) && is_numeric($_REQUEST['gluten_free'])) $PrdObj->gluten_free = $_REQUEST['gluten_free'];
 		$Prd_ID = $PrdDao->update($PrdObj);
 		
 		$throwJSON['id'] = $Prd_ID;
@@ -153,11 +168,25 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'update') {
         if (isset($_REQUEST['srtord']) && is_numeric($_REQUEST['srtord'])) $PrdObj->srtord = $_REQUEST['srtord'];
 
         if (isset($_REQUEST['vat_id']) && is_numeric($_REQUEST['vat_id'])) $PrdObj->vat_id = $_REQUEST['vat_id'];
+        if (isset($_REQUEST['vegan']) && is_numeric($_REQUEST['vegan'])){
+            $PrdObj->vegan = $_REQUEST['vegan'];
+        } else{
+            $PrdObj->vegan = 0;
+        }
 
-        if (isset($_REQUEST['prdobj'])) $PrdObj->prdobj = $_REQUEST['prdobj'];
-		
+        if (isset($_REQUEST['vegetarian']) && is_numeric($_REQUEST['vegetarian'])){
+            $PrdObj->vegetarian = $_REQUEST['vegetarian'];
+        } else{
+            $PrdObj->vegetarian = 0;
+        }
+        if (isset($_REQUEST['gluten_free']) && is_numeric($_REQUEST['gluten_free'])){
+            $PrdObj->gluten_free = $_REQUEST['gluten_free'];
+        } else{
+            $PrdObj->gluten_free = 0;
+        }
 		$Prd_ID = $PrdDao->update($PrdObj);
-		
+
+
 		$throwJSON['id'] = $Prd_ID;
 		$throwJSON['title'] = 'Product Updated';
 		$throwJSON['description'] = 'Product '.$PrdObj->prdnam.' updated';
@@ -166,71 +195,63 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'update') {
 	}
 
 } else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete') {
-	
-	$PrdObj = $PrdDao->select($Prd_ID, NULL, NULL, NULL, NULL, NULL, NULL, true);
-	if ($PrdObj) {
 
-		$Prd_ID = $PrdDao->delete($PrdObj->prd_id);
+    $PrdObj = $PrdDao->select($Prd_ID, NULL, NULL, NULL, NULL, NULL, NULL, true);
+    if ($PrdObj) {
 
-        if ($Prd_ID > 0) {
+        $TmpBpr = new BprDAO();
+        $checkProduct = $TmpBpr->checkBasketProduct(NULL, $Prd_ID);
+
+        if (count($checkProduct) > 0) {
 
             $throwJSON['id'] = $PrdObj->prd_id;
-            $throwJSON['title'] = 'Product Deleted';
-            $throwJSON['description'] = 'Product ' . $PrdObj->prdnam . ' deleted';
-            $throwJSON['type'] = 'success';
+            $throwJSON['title'] = 'Product Found In Basket';
+            $throwJSON['description'] = 'Product ' . $PrdObj->prdnam . ' is associated to a basket';
+            $throwJSON['type'] = 'error';
 
         } else {
 
-            $throwJSON['id'] = $Prd_ID;
-            $throwJSON['title'] = 'Product Found';
-            $throwJSON['description'] = 'Product ' . $PrdObj->prdnam . ' exists in orders';
-            $throwJSON['type'] = 'error';
+            $Prd_ID = $PrdDao->delete($PrdObj->prd_id);
 
+            if ($Prd_ID > 0) {
+
+                $throwJSON['id'] = $PrdObj->prd_id;
+                $throwJSON['title'] = 'Product Deleted';
+                $throwJSON['description'] = 'Product ' . $PrdObj->prdnam . ' deleted';
+                $throwJSON['type'] = 'success';
+
+            } else {
+
+                $throwJSON['id'] = $Prd_ID;
+                $throwJSON['title'] = 'Product Found';
+                $throwJSON['description'] = 'Product ' . $PrdObj->prdnam . ' exists in orders';
+                $throwJSON['type'] = 'error';
+
+            }
         }
-	} else {
-		
-		$throwJSON['id'] = $Prd_ID;
-		$throwJSON['title'] = 'Product No Found';
-		$throwJSON['description'] = 'Product not found';
-		$throwJSON['type'] = 'error';
 
-			
-	}
+    } else {
+
+        $throwJSON['id'] = $Prd_ID;
+        $throwJSON['title'] = 'Product No Found';
+        $throwJSON['description'] = 'Product not found';
+        $throwJSON['type'] = 'error';
+
+
+    }
+
 	
 } else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'select') {
 
     if ($Prd_ID == 0) $Prd_ID = NULL;
-	$products = $PrdDao->select($Prd_ID, NULL, NULL, NULL, NULL, NULL, 'p.srtord', false);
-	die(json_encode($products));
+    $products = $PrdDao->select($Prd_ID, NULL, NULL, NULL, NULL, NULL, 'p.srtord', false);
+    die(json_encode($products));
 
-} else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'resort') {
+} else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'selectlight') {
 
-    $SrtOrd = (isset($_REQUEST['prd_id'])) ? $_REQUEST['prd_id'] : NULL;
-
-    if (!is_null($SrtOrd)) {
-
-        $SrtOrd = explode(",",$SrtOrd);
-
-        for ($o=0; $o<count($SrtOrd); $o++) {
-
-            $qryArray = array();
-            $sql = 'UPDATE products SET
-				srtord = :srtord
-				WHERE prd_id = :prd_id';
-            $qryArray["srtord"] = $o;
-            $qryArray["prd_id"] = $SrtOrd[$o];
-
-            $recordSet = $patchworks->dbConn->prepare($sql);
-            $recordSet->execute($qryArray);
-
-        }
-
-        $throwJSON['id'] = 0;
-        $throwJSON['title'] = 'products Resorted';
-        $throwJSON['description'] = 'products resorted';
-        $throwJSON['type'] = 'success';
-
-    }
+    if ($Prd_ID == 0) $Prd_ID = NULL;
+    $products = $PrdDao->selectLight($Prd_ID, NULL, NULL, NULL, NULL, NULL, 'p.srtord', false);
+    die(json_encode($products));
 
 }
 

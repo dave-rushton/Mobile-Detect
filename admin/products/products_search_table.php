@@ -44,7 +44,7 @@ $Tbl_ID = (isset($_GET['tbl_id'])) ? $_GET['tbl_id'] : NULL;
 
 $attributeSearch = $TmpAtv->searchAttributeValues ( $Atr_ID , $AtrArr, $AtrVal, $TblNam, $Tbl_ID );
 
-
+$products = NULL;
 
 if (count($attributeSearch) > 0) {
 				
@@ -62,6 +62,10 @@ if (count($attributeSearch) > 0) {
 
 	$products = (!empty($PrdLst)) ? $PrdDao->selectByIDs($PrdLst, $Atr_ID) : NULL;
 	
+} else {
+
+    $products = $PrdDao->searchProducts($Atr_ID, NULL, NULL, 'p.srtord');
+
 }
 
 $tableLength = count($products);

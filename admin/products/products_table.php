@@ -11,7 +11,7 @@ $loggedIn = $userAuth->loggedIn($_SESSION['s_log_id']);
 if ($loggedIn == 0) header('location: ../login.php');
 
 $offset = (isset($_GET['iDisplayStart']) && is_numeric($_GET['iDisplayStart'])) ? (int)$_GET['iDisplayStart'] : 0;
-$perpag = (isset($_GET['iDisplayLength']) && is_numeric($_GET['iDisplayLength'])) ? (int)$_GET['iDisplayLength'] : 9999;
+$perpag = (isset($_GET['iDisplayLength']) && is_numeric($_GET['iDisplayLength'])) ? (int)$_GET['iDisplayLength'] : 50;
 $search = (isset($_GET['sSearch']) && !empty($_GET['sSearch'])) ? $_GET['sSearch'] : NULL;
 
 $sOrder = "p.prdnam";
@@ -56,33 +56,24 @@ for ($i=0;$i<$tableLength;++$i) {
     $prdImage = '';
 
     if (
-        file_exists($patchworks->docRoot.'uploads/images/products/169-130/'.$products[$i]['prdimg']) &&
-        !is_dir($patchworks->docRoot.'uploads/images/products/169-130/'.$products[$i]['prdimg']))
+        file_exists($patchworks->docRoot.'uploads/images/169-130/'.$products[$i]['prdimg']) &&
+        !is_dir($patchworks->docRoot.'uploads/images/169-130/'.$products[$i]['prdimg']))
     {
-        $prdImage = '<img src="'.$patchworks->webRoot.'uploads/images/products/169-130/'.$products[$i]['prdimg'].'" class="img-responsive" />';
+        $prdImage = '<img src="'.$patchworks->webRoot.'uploads/images/169-130/'.$products[$i]['prdimg'].'" class="img-responsive" />';
     } else {
         if (
-            file_exists($patchworks->docRoot.'uploads/images/products/169-130/'.$products[$i]['prtimg']) &&
-            !is_dir($patchworks->docRoot.'uploads/images/products/169-130/'.$products[$i]['prtimg']))
+            file_exists($patchworks->docRoot.'uploads/images/169-130/'.$products[$i]['prtimg']) &&
+            !is_dir($patchworks->docRoot.'uploads/images/169-130/'.$products[$i]['prtimg']))
         {
-            $prdImage = '<img src="'.$patchworks->webRoot.'uploads/images/products/169-130/'.$products[$i]['prtimg'].'" class="img-responsive" />';
+            $prdImage = '<img src="'.$patchworks->webRoot.'uploads/images/169-130/'.$products[$i]['prtimg'].'" class="img-responsive" />';
         } else {
             $prdImage = '<img class="img-responsive" src="http://placehold.it/169x130&text=no image">';
         }
     }
 
-    //$tableRec = array($prdImage, '<a href="products/product-edit.php?prd_id='.$products[$i]['prd_id'].'">'.$products[$i]['prdnam'].'</a>', '<a href="products/productgroup-edit.php?atr_id='.$products[$i]['atr_id'].'">'.$products[$i]['atrnam'].'</a>', '<a href="products/producttype-edit.php?prt_id='.$products[$i]['prt_id'].'">'.$products[$i]['prtnam'].'</a>', number_format($products[$i]['unipri'],2) );
+    $tableRec = array($prdImage, $products[$i]['prd_id'], $products[$i]['prdnam'], $products[$i]['atr_id'], $products[$i]['atrnam'], $products[$i]['subnam'], number_format($products[$i]['unipri'],2), $products[$i]['unipri']*100 );
 
-    $tableRec = array(
-        $prdImage,
-        $products[$i]['prd_id'],
-        $products[$i]['prdnam'],
-        //$products[$i]['atr_id'],
-        //$products[$i]['atrnam'],
-        //$products[$i]['subnam'],
-        number_format($products[$i]['unipri'],2),
-        $products[$i]['in_stk']
-    );
+    //$tableRec = array($products[$i]['prd_id'], $products[$i]['prdnam'], number_format($products[$i]['unipri'],2), $products[$i]['unipri']*100 );
 
     array_push($ajaxData['aaData'], $tableRec);
 

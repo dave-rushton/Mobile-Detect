@@ -1,20 +1,17 @@
 <?php
 
 class PrbDAO extends db {
-	
+
 	function select($Prb_ID = NULL, $Cus_ID=NULL, $Prt_ID=NULL, $Prd_ID=NULL, $CurDat=NULL, $NumUni=NULL, $Sta_ID=NULL, $ReqObj = false) {
-	
+
 		$qryArray = array();
 		$sql = 'SELECT 
 				pb.*,
 				pt.prtnam,
-				p.prdnam,
-				cus.pla_id,
-				cus.planam
+				p.prdnam
 				FROM pricebands pb
 				INNER JOIN producttypes pt ON pt.prt_id = pb.prt_id
 				LEFT OUTER JOIN products p ON p.prd_id = pb.prd_id
-				LEFT OUTER JOIN places cus ON cus.pla_id = pb.cus_id
 				WHERE true ';
 
         if (!is_null($Prb_ID)) {
@@ -54,23 +51,23 @@ class PrbDAO extends db {
 
         }
 
-        $sql .= ' ORDER BY unipri ASC';
-		
+        $sql .= ' ORDER BY unipri DESC';
+
 		//$this->displayQuery($sql, $qryArray);
 		return $this->run($sql, $qryArray, $ReqObj);
 
 	}
-	
+
 	function update($PrbCls = NULL) {
-	
+
 		if (is_null($PrbCls) || !$PrbCls) return 'No Record To Update';
-		
+
 		$sql = '';
-		
+
 		$qryArray = array();
-		
+
 		if ($PrbCls->prb_id == 0) {
-			
+
 			$qryArray["cus_id"] = $PrbCls->cus_id;
 			$qryArray["prt_id"] = $PrbCls->prt_id;
 			$qryArray["prd_id"] = $PrbCls->prd_id;
@@ -105,7 +102,7 @@ class PrbDAO extends db {
 					:unipri,
 					:sta_id
 					);";
-						
+
 		} else {
 
             $qryArray["cus_id"] = $PrbCls->cus_id;
@@ -117,7 +114,7 @@ class PrbDAO extends db {
             $qryArray["numuni"] = $PrbCls->numuni;
             $qryArray["unipri"] = $PrbCls->unipri;
             $qryArray["sta_id"] = $PrbCls->sta_id;
-			
+
 			$sql = "UPDATE pricebands
 					SET
 					cus_id = :cus_id,
@@ -130,41 +127,41 @@ class PrbDAO extends db {
 					unipri = :unipri,
 					sta_id = :sta_id
 					WHERE prb_id = :prb_id";
-			
+
 			$qryArray["prb_id"] = $PrbCls->prb_id;
-			
+
 		}
 
         //$this->displayQuery($sql,$qryArray);
 
 		$recordSet = $this->dbConn->prepare($sql);
 		$recordSet->execute($qryArray);
-		
+
 		return ($PrbCls->prb_id == 0) ? $this->dbConn->lastInsertId('prb_id') : $PrbCls->prb_id;
 	}
-	
+
 	function delete($Prb_ID = NULL) {
-	
+
 		try {
-			
+
 			if (!is_null($Prb_ID)) {
 				$qryArray = array();
 				$sql = 'DELETE FROM pricebands WHERE prb_id = :prb_id ';
 				$qryArray["prb_id"] = $Prb_ID;
-				
+
 				$recordSet = $this->dbConn->prepare($sql);
 				$recordSet->execute($qryArray);
-				
+
 				return $Prb_ID;
-				
+
 			}
-			
+
 		} catch(PDOException $e) {
 			echo 'ERROR: ' . $e->getMessage();
 		}
-		
+
 	}
-	
+
 }
 
 ?>

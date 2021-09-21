@@ -11,6 +11,8 @@ require_once("../system/classes/categories.cls.php");
 require_once("../system/classes/subcategories.cls.php");
 require_once("../ecommerce/classes/vat.cls.php");
 
+require_once("../custom/classes/baskets.cls.php");
+
 
 $userAuth = new AuthDAO();
 $loggedIn = $userAuth->loggedIn($_SESSION['s_log_id']);
@@ -98,8 +100,10 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
 					</li>
 				</ul>
 			</div>
+
 			<div class="row-fluid">
 				<div class="span6">
+
 					<div class="box box-color box-bordered">
 						<div class="box-title">
 							<h3>
@@ -113,9 +117,9 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
 							</div>
 						</div>
 						<div class="box-content nopadding">
-							
-							
-							
+
+
+
 							<form id="productForm" class="form-horizontal form-bordered form-validate" action="products/products_script.php" data-returnurl="products/products.php">
 								<input type="hidden" name="tblnam" value="PRODUCT">
 								<input type="hidden" name="tbl_id" value="<?php echo(isset($productRec)) ? $productRec->prt_id : 0; ?>">
@@ -201,6 +205,29 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
                                     </div>
                                 </div>
 
+                                <?php
+
+                                ?>
+                                <div class="control-group">
+                                    <label class="control-label">Dietary Requirements<small>Tick to show icon(s)</small></label>
+                                    <div class="controls">
+
+                                        <label class="radio">
+                                            <input type="checkbox" name="vegan" id="vegan" value="1" <?php echo( $productRec->vegan == "1") ? 'checked="checked"' : ''; ?>>
+                                            Vegan</label>
+                                        <label class="radio">
+                                            <input type="checkbox" name="vegetarian" id="vegetarian" value="1" <?php echo($productRec->vegetarian == "1") ? 'checked="checked"' : ''; ?>>
+                                            Vegetarian</label>
+                                        <label class="radio">
+                                            <input type="checkbox" name="gluten_free" id="gluten_free" value="1" <?php echo( $productRec->gluten_free == "1") ? 'checked="checked"' : ''; ?>>
+                                            Gluten Free</label>
+                                    </div>
+                                </div>
+
+
+
+
+
                                 <h4>Product Description</h4>
                                 
 								<div class="control-group">
@@ -255,7 +282,6 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
 								</div>
 
 
-
                                 <div class="control-group">
                                     <label class="control-label">YOUTUBE Video<small>YOUTUBE Video ID</small></label>
                                     <div class="controls">
@@ -264,11 +290,31 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
                                 </div>
 
 
-
                                 <div class="control-group">
                                     <label class="control-label">In Stock<small>current stock of this product variant</small></label>
                                     <div class="controls">
                                         <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="in_stk" value="<?php echo(isset($productRec)) ? $productRec->in_stk : '0'; ?>">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label">Low Stock Notification<small>send email when stock below [x]</small></label>
+                                    <div class="controls">
+                                        <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="on_del" value="<?php echo(isset($productRec)) ? $productRec->on_del : '0'; ?>">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label">Lead Time<small>in days</small></label>
+                                    <div class="controls">
+                                        <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="on_ord" value="<?php echo(isset($productRec)) ? $productRec->on_ord : '0'; ?>">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label">Weight<small>total weight of item</small></label>
+                                    <div class="controls">
+                                        <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="weight" value="<?php echo(isset($productRec)) ? $productRec->weight : '0'; ?>">
                                     </div>
                                 </div>
 
@@ -296,30 +342,12 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
                                     </div>
 
                                     <div class="control-group">
-                                        <label class="control-label">Weight<small>total weight of item</small></label>
-                                        <div class="controls">
-                                            <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="weight" value="<?php echo(isset($productRec)) ? $productRec->weight : '0'; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
                                         <label class="control-label">Stock<small>total stock of this product variant</small></label>
                                         <div class="controls">
                                             <select name="usestk">
                                                 <option value="0" selected>Non Stock</option>
                                                 <option value="1" >Use Stock</option>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label class="control-label">On Order<small>stock on order of this product variant</small></label>
-                                        <div class="controls">
-                                            <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="on_ord" value="<?php echo(isset($productRec)) ? $productRec->on_ord : '0'; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label class="control-label">On Delivery<small>current stock in transit</small></label>
-                                        <div class="controls">
-                                            <input type="text" class="input-large" data-rule-required="true" data-rule-number="true" name="on_del" value="<?php echo(isset($productRec)) ? $productRec->on_del : '0'; ?>">
                                         </div>
                                     </div>
 
@@ -332,11 +360,15 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
                                         <select name="vat_id">
 
                                             <?php
+
                                             $tableLength = count($vatRecs);
                                             for ($i=0;$i<$tableLength;++$i) {
                                                 ?>
                                                 <option value="<?php echo $vatRecs[$i]['vat_id']; ?>" <?php if (isset($productRec) && $productRec->vat_id == $vatRecs[$i]['vat_id']) echo 'selected'; ?>><?php echo $vatRecs[$i]['vatnam']; ?></option>
-                                            <?php } ?>
+                                            <?php }
+
+
+                                            ?>
 
                                         </select>
                                     </div>
@@ -349,10 +381,12 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="span6">
+
 					<div class="box box-color box-bordered">
 						<div class="box-title">
+
 							<h3>
 								<i class="icon-shopping-cart"></i> Product Attributes</h3>
 						</div>
@@ -406,6 +440,53 @@ $vatRecs = $TmpVat->select(NULL, NULL, NULL, false);
 
                             </div>
                         </div>
+
+                    <div class="box box-color box-bordered">
+                        <div class="box-title">
+                            <h3>
+                                <i class="icon-shopping-cart"></i> Related Baskets</h3>
+                        </div>
+                        <div class="box-content nopadding">
+
+                            <?php
+
+                            $TmpBpr = new BprDAO();
+                            $checkProduct = $TmpBpr->checkBasketProduct(NULL, $Prd_ID);
+
+                            ?>
+
+                            <table class="table table-bordered table-striped table-highlight" id="productTable">
+                                <thead>
+                                <tr>
+                                    <th>Basket</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php
+
+                                $tableLength = count($checkProduct);
+                                for ($i=0;$i<$tableLength;++$i) {
+
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $checkProduct[$i]['bskttl']; ?></td>
+                                    </tr>
+                                    <?php
+
+                                }
+                                ?>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+
+
+
+
 
 
 

@@ -9,7 +9,7 @@ $loggedIn = $userAuth->loggedIn($_SESSION['s_log_id']);
 
 $Prt_ID = (isset($_GET['prt_id']) && is_numeric($_GET['prt_id'])) ? $_GET['prt_id'] : die('');
 
-$products = NULL;
+$products = array();
 if ($Prt_ID > 0) {
     $TmpPrd = new PrdDAO();
     $products = $TmpPrd->select(NULL, NULL, $Prt_ID, NULL, NULL, NULL, NULL, false, NULL, NULL);

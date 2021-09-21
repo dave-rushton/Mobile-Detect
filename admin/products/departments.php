@@ -39,6 +39,8 @@ if (!$categoryRec) {
     $CatObj->sta_id = 0;
     $Cat_ID = $TmpCat->update($CatObj);
 
+    $categoryRec = $TmpCat->select(NULL,$TblNam,NULL,NULL,true);
+
 } else {
     $Cat_ID = $categoryRec->cat_id;
 }

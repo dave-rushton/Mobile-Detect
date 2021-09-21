@@ -9,7 +9,7 @@ $(function(){
         "sServerMethod": "GET",
         "sAjaxSource": "products/producttypes_table.php",
         "sAjaxDataProp": "aaData",
-        "iDisplayLength": 999,
+        "iDisplayLength": 10,
 
         "sPaginationType": "full_numbers",
         "oLanguage":{
@@ -283,6 +283,8 @@ function changeProductType () {
 
             try {
 
+                console.log(data);
+
                 var result = JSON.parse(data);
 
                 var resultHTML = '';
@@ -291,7 +293,6 @@ function changeProductType () {
 
                     resultHTML += '<tr>';
                     resultHTML += '<td>'+result[i].prdnam+'</td>';
-                    resultHTML += '<td>'+result[i].planam+'</td>';
                     resultHTML += '<td>'+result[i].numuni+'</td>';
                     resultHTML += '<td>'+result[i].unipri+'</td>';
                     resultHTML += '<td><a href="#" class="btn btn-danger btn-mini deleteBandLink" data-prb_id="'+result[i].prb_id+'"><i class="icon icon-remove"></i></a></td>';

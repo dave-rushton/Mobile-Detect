@@ -6,11 +6,11 @@ $(function(){
 	attrLabelForm = $('#attrLabelForm');
 	
 	$('[name="atrnam"]', attrGroupForm).on("keyup", function() {
-		$('[name="seourl"]', attrGroupForm ).val( seoURL( $('[name="atrnam"]', attrGroupForm).val() ) );
+		$('[name="seourl"]', attrGroupForm ).val( seoURL( $('[name="tbl_id"] option:selected ', attrGroupForm ).text() + ' ' + $('[name="atrnam"]', attrGroupForm).val() ) );
 	});
 
     $('[name="tbl_id"]', attrGroupForm).on("change", function() {
-        $('[name="seourl"]', attrGroupForm ).val( seoURL( $('[name="atrnam"]', attrGroupForm).val() ) );
+        $('[name="seourl"]', attrGroupForm ).val( seoURL( $('[name="tbl_id"] option:selected ', attrGroupForm ).text() + ' ' + $('[name="atrnam"]', attrGroupForm).val() ) );
     });
 	
 	//
@@ -67,10 +67,6 @@ $(function(){
 
     attrGroupForm.submit(function(e){
 
-        var fields = $(".customfield", $('#languageForm')).serializeArray();
-        var elementVariables = JSON.stringify(fields);
-        var postData = encodeURIComponent(elementVariables);
-
 		e.preventDefault();
 
         $('[name="atrtag"]', attrGroupForm).val( $('[name="atrtagselect"]', attrGroupForm).val() );
@@ -79,7 +75,7 @@ $(function(){
 			
 			$.ajax({
 				url: attrGroupForm.attr("action"),
-				data: 'action=update&ajax=true&' + attrGroupForm.serialize() + '&atrobj=' + postData,
+				data: 'action=update&ajax=true&' + attrGroupForm.serialize(),
 				type: 'POST',
 				async: false,
 				success: function( data ) {
@@ -256,17 +252,12 @@ $(function(){
 			
 			$('#AtrLst_UL').append( resultHTML );
 			
-			$('#AddAltLst').val('').focus();
+			$('#AddAltLst').val('');
 			
 		}
 		
 	});
-
-    $('#AddAltLst').keypress(function (e) {
-        if(e.which ==13)
-            $('#addAltLst').click();
-    });
-
+	
 	$('#AtrLst_UL').on('click', '.removeAltLst', function (e) {
 		e.preventDefault();
 		$(this).closest('li').remove();
